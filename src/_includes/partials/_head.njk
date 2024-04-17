@@ -10,10 +10,25 @@
     <link rel="mask-icon" href="/assets/icon/mask-icon.svg" color="#000000">
     <link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
     <!-- CSS -->
-    {% css '/assets/css/main.css' | url %}
-    {% css '/assets/css/tailwind.css' | url %}
+    {% for style in css %}
+        {% if style | isValidUrl %}
+            {% css style %}
+        {% else %}
+            {% css ['/assets/css/', style] | join | url %}
+        {% endif %}
+    {% else %}
+        {% css '/assets/css/tailwind.css' | url %}
+    {% endfor %}
     <!-- JS -->
-    {% js '/assets/js/main.js' | url %}
+    {% for script in js %}
+        {% if script | isValidUrl%}
+            {% js script %}
+        {% else %}
+            {% js ['/assets/js/', script] | join | url %}
+        {% endif %}
+    {% else %}
+        {% js '/assets/js/main.js' | url %}
+    {% endfor %}
     <!-- Title -->
     <title>
         {% if title %}{{title}}{% else %}{{meta.title}}{% endif %}

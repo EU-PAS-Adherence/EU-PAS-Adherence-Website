@@ -71,6 +71,15 @@ module.exports = function(eleventyConfig){
       return json.sort((a, b) => a[attr].localeCompare(b[attr]));
     });
 
+    eleventyConfig.addFilter("isValidUrl", function(value) {  
+      try {
+        const url = new URL(value);
+        return url.protocol === "http:" || url.protocol === "https:";
+      } catch (_) {
+        return false;  
+      }
+    });
+
     // TRANSFORMS
     eleventyConfig.addTransform("htmlmin", function(content) {
       if (this.page.outputPath && this.page.outputPath.endsWith(".html")) {

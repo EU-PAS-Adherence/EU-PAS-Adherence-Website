@@ -5,42 +5,50 @@ tags: main
 css:
   - main.css
   - tailwind.css
+  - https://cdn.datatables.net/2.0.4/css/dataTables.dataTables.min.css
 js:
+  - https://code.jquery.com/jquery-3.7.1.min.js
+  - https://cdn.datatables.net/2.0.4/js/dataTables.min.js
   - main.js
 ---
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th><th>#</th><th>Results</th><th class="text-end">%</th><th>Protocols</th><th class="text-end">%</th>
-    </tr>
-  </thead>
-  <tbody>
-  {%- for entry in funding -%}
-    <tr>
-      <td>
-        {{ entry.name }}
-      </td>
-      <td>
-        {{ entry.num_studies }}
-      </td>
-      <td class="text-center">
-        {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
-      </td>
-      <td class="text-end">
-        {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-          {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
-        {% endif %}
-      </td>
-      <td class="text-center">
-        {{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}
-      </td>
-      <td class="text-end">
-        {% if entry.number_of_studies_with_past_data_collection > 0 %}
-          {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) }}%
-        {% endif %}
-      </td>
-    </tr>
-  {%- endfor -%}
-  </tbody>
-</table>
+<main class="max-w-5xl p-4 mx-auto">
+  <article class="my-24">
+    <h1 class="text-center text-2xl uppercase">The EMA-HMA PAS Tracker</h1>
+    <p class="max-w-3xl mx-auto">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
+  </article>
+  <table id="data" class="hover order-column row-border">
+    <thead>
+      <tr>
+        <th>Name</th><th>#</th><th>Results</th><th class="text-end">%</th><th>Protocols</th><th class="text-end">%</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%- for entry in funding -%}
+      <tr>
+        <td>
+          {{ entry.name }}
+        </td>
+        <td>
+          {{ entry.num_studies }}
+        </td>
+        <td class="text-center">
+          {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
+        </td>
+        <td class="text-end">
+          {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
+            {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
+          {% endif %}
+        </td>
+        <td class="text-center">
+          {{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}
+        </td>
+        <td class="text-end">
+          {% if entry.number_of_studies_with_past_data_collection > 0 %}
+            {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) }}%
+          {% endif %}
+        </td>
+      </tr>
+    {%- endfor -%}
+    </tbody>
+  </table>
+</main>
