@@ -1,0 +1,9 @@
+---
+permalink: "robots.txt"
+---
+User-Agent: *
+{% for site in collections.norobot %}
+Disallow: {{ site.url }}
+{% else %}
+Allow: /
+{% endfor %}

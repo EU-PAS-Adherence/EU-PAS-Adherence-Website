@@ -1,0 +1,46 @@
+---
+layout: base.njk
+title: Home
+tags: main
+css:
+  - main.css
+  - tailwind.css
+js:
+  - main.js
+---
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th><th>#</th><th>Results</th><th class="text-end">%</th><th>Protocols</th><th class="text-end">%</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%- for entry in funding -%}
+    <tr>
+      <td>
+        {{ entry.name }}
+      </td>
+      <td>
+        {{ entry.num_studies }}
+      </td>
+      <td class="text-center">
+        {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
+      </td>
+      <td class="text-end">
+        {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
+          {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
+        {% endif %}
+      </td>
+      <td class="text-center">
+        {{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}
+      </td>
+      <td class="text-end">
+        {% if entry.number_of_studies_with_past_data_collection > 0 %}
+          {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) }}%
+        {% endif %}
+      </td>
+    </tr>
+  {%- endfor -%}
+  </tbody>
+</table>
