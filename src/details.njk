@@ -1,0 +1,53 @@
+---
+layout: base.njk
+title: Details
+css:
+  - tailwind.css
+js:
+  - https://cdn.jsdelivr.net/npm/apexcharts
+  - details.js
+pagination:
+  data: funding
+  size: 1
+  alias: entry
+permalink: "details/{{ entry.name | transformFunding | slugify }}/"
+---
+<main class="max-w-5xl p-4 mx-auto">
+    <article class="my-24 max-w-3xl">
+        <h1 class="text-2xl">{{ entry.name | transformFunding }}</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
+        <div id="chart" 
+            data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
+            data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
+            data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
+            data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
+            data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
+        ></div>
+        <p class="mt-8">
+            number_of_collaborations_with_research_network: {{ entry.number_of_collaborations_with_research_network }} <br>
+            number_of_countries: {{ entry.number_of_countries }} <br>
+            set_of_countries: {{ entry.set_of_countries }} <br>
+            min_number_of_subjects: {{ entry.min_number_of_subjects }} <br>
+            max_number_of_subjects: {{ entry.max_number_of_subjects }} <br>
+            mean_number_of_subjects: {{ entry.mean_number_of_subjects }} <br>
+            median_number_of_subjects: {{ entry.median_number_of_subjects }} <br>
+            number_of_studies_with_outcomes: {{ entry.number_of_studies_with_outcomes }} <br>
+            number_of_studies_requested_by_regulator: {{ entry.number_of_studies_requested_by_regulator }} <br>
+            number_of_studies_using_established_data_sources: {{ entry.number_of_studies_using_established_data_sources }} <br>
+            number_of_studies_with_updated_state_finalised: {{ entry.number_of_studies_with_updated_state_finalised }} <br>
+            number_of_studies_with_updated_state_ongoing: {{ entry.number_of_studies_with_updated_state_ongoing }} <br>
+            number_of_studies_with_updated_state_planned: {{ entry.number_of_studies_with_updated_state_planned }} <br>
+            number_of_studies_with_rmp_1_(imposed_as_condition_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }} <br>
+            number_of_studies_with_rmp_2_(specific_obligation_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }} <br>
+            number_of_studies_with_rmp_3_(required): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }} <br>
+            number_of_studies_with_rmp_not_applicable: {{ entry.number_of_studies_with_risk_management_plan_not_applicable }} <br>
+            number_of_studies_with_rmp_non-eu_rmp_only: {{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }} <br>
+            number_of_studies_with_result: {{ entry.number_of_studies_with_result }} <br>
+            number_of_studies_with_protocol: {{ entry.number_of_studies_with_protocol }} <br>
+            number_of_studies_with_past_data_collection: {{ entry.number_of_studies_with_past_data_collection }} <br>
+            number_of_studies_with_past_data_collection_and_protocols: {{ entry.number_of_studies_with_past_data_collection_and_protocols }} <br>
+            number_of_studies_with_two_weeks_past_final_report: {{ entry.number_of_studies_with_two_weeks_past_final_report }} <br>
+            number_of_studies_with_two_weeks_past_final_report_and_results: {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} <br>
+        </p>
+    </article>
+</main>

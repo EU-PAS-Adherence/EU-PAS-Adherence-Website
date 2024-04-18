@@ -6,18 +6,21 @@ css:
   - main.css
   - tailwind.css
   - https://cdn.datatables.net/2.0.4/css/dataTables.dataTables.min.css
+  - https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.min.css
 js:
   - https://code.jquery.com/jquery-3.7.1.min.js
   - https://cdn.datatables.net/2.0.4/js/dataTables.min.js
+  - https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js
   - main.js
 ---
 <main class="max-w-5xl p-4 mx-auto">
-  <article class="my-24">
-    <h1 class="text-center text-2xl uppercase">The EMA-HMA PAS Tracker</h1>
-    <p class="max-w-3xl mx-auto">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
+  <article class="flex flex-col my-24 gap-6 max-w-3xl mx-auto">
+    <h1 class="text-center text-4xl uppercase border-b-4 border-current inline-block mx-auto">The EMA-HMA PAS Tracker</h1>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
+    <p class="italic">Click header for ordering. <br> Shift + Click header for multi-column ordering. <br> Use quotes in search for exact matches. <br> Use ! in front of a word in search to exclude it from the results.</p>
   </article>
-  <table id="data" class="hover order-column row-border">
-    <thead>
+  <table id="data" class="hover stripe row-border">
+    <thead class="text-lg">
       <tr>
         <th>Name</th><th>#</th><th>Results</th><th class="text-end">%</th><th>Protocols</th><th class="text-end">%</th>
       </tr>
@@ -25,8 +28,8 @@ js:
     <tbody>
     {%- for entry in funding -%}
       <tr>
-        <td>
-          {{ entry.name }}
+        <td class="text-lg *:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600">
+          <a class="underline-offset-4 decoration-2 {% if entry.name | isSpecialFunding %} underline decoration-dotted {% endif %}" href="/details/{{ entry.name | transformFunding | slugify }}">{{ entry.name | transformFunding }}</a>
         </td>
         <td>
           {{ entry.num_studies }}
@@ -50,5 +53,8 @@ js:
       </tr>
     {%- endfor -%}
     </tbody>
+    {# <caption>
+      List of all funders with percentages of reported protocols and results.
+    </caption> #}
   </table>
 </main>

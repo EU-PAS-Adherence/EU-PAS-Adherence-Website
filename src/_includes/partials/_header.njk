@@ -1,16 +1,16 @@
 <header>
     <nav class="flex items-center justify-between p-6 mx-auto mt-6 max-w-5xl rounded-full border border-slate-200 shadow-sm">
-        <div class="text-xl font-bold">EMA-HMA Catalogue of Studies</div>
+        <a href="/" class="text-xl font-bold">EMA-HMA Catalogue of Studies</a>
         <div class="flex gap-4 divide-x-2 divide-slate-200 text-lg">
             <ul class="flex items-center gap-6">
-                <li><a class="border-b-2 border-spacing-6 border-indigo-600 text-indigo-600" href="#">Home</a></li>
-                <li><a class="hover:border-b-2 border-spacing-6 border-neutral-800" href="#">Methods</a></li>
-                <li><a class="hover:border-b-2 border-spacing-6 border-neutral-800" href="#">About</a></li>
+                {%- for mainpage in collections.main -%}
+                <li>
+                    <a class="underline-offset-4 decoration-2  {% if page.url == mainpage.url %} underline decoration-indigo-600 text-indigo-600 {% else %} hover:underline {% endif %} " href="{{ mainpage.url }}" {% if page.url == mainpage.url %} aria-current="page"{% endif %}>{{ mainpage.data.title }}</a>
+                </li>
+                {%- endfor -%}
             </ul>
             <a href="#" class="px-4 inline-flex items-center">
-                <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-1.5 h-4 w-4 fill-current" viewBox="0 0 384 512" aria-hidden="true"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"/></svg>
                 Read the paper
             </a>
         </div>

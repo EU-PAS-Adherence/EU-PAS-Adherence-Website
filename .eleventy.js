@@ -63,10 +63,6 @@ module.exports = function(eleventyConfig){
       return `${pad(date.getDate())}${sep}${pad(date.getMonth() + 1)}${sep}${date.getFullYear()}`;
     });
 
-    eleventyConfig.addFilter("getFirst", function(array, num) {
-      return array.slice(0, num);
-    });
-
     eleventyConfig.addFilter("sortBy", function(json, attr) {
       return json.sort((a, b) => a[attr].localeCompare(b[attr]));
     });
@@ -78,6 +74,20 @@ module.exports = function(eleventyConfig){
       } catch (_) {
         return false;  
       }
+    });
+
+    eleventyConfig.addFilter("transformFunding", function(value) {  
+      if (value === null) {
+        return "No Value Assigned"
+      } else if (value.startsWith('$')) {
+        return value.slice(1).replace(/([a-z])([A-Z])/g, '$1 $2')
+      } else {
+        return value
+      }
+    });
+
+    eleventyConfig.addFilter("isSpecialFunding", function(value) {  
+      return value === null || value.startsWith('$');
     });
 
     // TRANSFORMS
