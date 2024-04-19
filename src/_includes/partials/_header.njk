@@ -1,7 +1,17 @@
-<header>
-    <nav class="flex items-center justify-between p-6 mx-auto mt-6 max-w-5xl rounded-full border border-slate-200 shadow-sm">
-        <a href="/" class="text-xl font-bold">EMA-HMA Catalogue of Studies</a>
-        <div class="flex gap-4 divide-x-2 divide-slate-200 text-lg">
+<header class="px-4">
+    <nav class="flex items-center justify-between p-6 mx-auto mt-6 max-w-5xl rounded-full bg-white border border-slate-200 shadow-sm" aria-label="Global Navigation">
+        <div class="flex lg:flex-1">
+            <a href="/" class="text-xl font-bold">PAS Tracker</a>
+        </div>
+        <div class="flex lg:hidden">
+            <button id="menu-open" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5">
+                <span class="sr-only">Open main menu</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-4 divide-x-2 divide-slate-200 text-lg">
             <ul class="flex items-center gap-6">
                 {%- for mainpage in collections.main -%}
                 <li>
@@ -15,4 +25,39 @@
             </a>
         </div>
     </nav>
+
+    {# TODO: Optimize mobile menu #}
+    <!-- Mobile menu, show/hide based on menu open state. -->
+    <div id="menu-dialog" class="hidden lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
+                <a href="/" class="text-xl font-bold">PAS Tracker</a>
+                <button id="menu-close" type="button" class="-m-2.5 rounded-md p-2.5">
+                    <span class="sr-only">Close menu</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-6 flow-root">
+                <div class="-my-6 divide-y divide-gray-500/10 text-lg">
+                    <ul class="space-y-2 py-6">
+                        {%- for mainpage in collections.main -%}
+                        <li class="-mx-4 block rounded-lg px-4 py-2 hover:bg-gray-50">
+                            <a class="underline-offset-4 decoration-2  {% if page.url == mainpage.url %} underline decoration-indigo-600 text-indigo-600 {% else %} hover:underline {% endif %} " href="{{ mainpage.url }}" {% if page.url == mainpage.url %} aria-current="page"{% endif %}>{{ mainpage.data.title }}</a>
+                        </li>
+                        {%- endfor -%}
+                    </ul>
+                    <div class="py-6">
+                        <a href="#" class="-mx-4 flex rounded-lg px-4 py-2 hover:bg-gray-50 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-1.5 h-4 w-4 fill-current" viewBox="0 0 384 512" aria-hidden="true"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"/></svg>
+                            Read the paper
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>

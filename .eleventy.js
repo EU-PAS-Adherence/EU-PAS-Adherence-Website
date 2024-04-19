@@ -58,15 +58,6 @@ module.exports = function(eleventyConfig){
     );
 
     // FILTER
-    const pad = v => `0${v}`.slice(-2);
-    eleventyConfig.addFilter("date", function(date, sep="-") {
-      return `${pad(date.getDate())}${sep}${pad(date.getMonth() + 1)}${sep}${date.getFullYear()}`;
-    });
-
-    eleventyConfig.addFilter("sortBy", function(json, attr) {
-      return json.sort((a, b) => a[attr].localeCompare(b[attr]));
-    });
-
     eleventyConfig.addFilter("isValidUrl", function(value) {  
       try {
         const url = new URL(value);
@@ -89,6 +80,14 @@ module.exports = function(eleventyConfig){
     eleventyConfig.addFilter("isSpecialFunding", function(value) {  
       return value === null || value.startsWith('$');
     });
+
+    eleventyConfig.addFilter("map", function(array, value) {  
+      return array.map((a) =>a[value]);
+    });
+
+    eleventyConfig.addFilter("max", function(array) {
+      return Math.max(...array);
+    })
 
     // TRANSFORMS
     eleventyConfig.addTransform("htmlmin", function(content) {

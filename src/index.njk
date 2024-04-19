@@ -8,6 +8,7 @@ css:
   - https://cdn.datatables.net/2.0.4/css/dataTables.dataTables.min.css
   - https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.min.css
 js:
+  - header.js
   - https://code.jquery.com/jquery-3.7.1.min.js
   - https://cdn.datatables.net/2.0.4/js/dataTables.min.js
   - https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js
@@ -15,18 +16,43 @@ js:
 ---
 <main class="max-w-5xl p-4 mx-auto">
   <article class="flex flex-col my-24 gap-6 max-w-3xl mx-auto">
-    <h1 class="text-center text-4xl uppercase border-b-4 border-current inline-block mx-auto">The EMA-HMA PAS Tracker</h1>
+    <h1 class="text-center text-4xl uppercase underline decoration-4 leading-[3rem] inline-block mx-auto">The HMA-EMA PAS&nbsp;Tracker</h1>
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
-    <p class="italic">Click header for ordering. <br> Shift + Click header for multi-column ordering. <br> Use quotes in search for exact matches. <br> Use ! in front of a word in search to exclude it from the results.</p>
+    <p class="italic leading-10">
+      Click header for ordering. <br> 
+      <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
+        Shift
+      </kbd> + Click header for multi-column ordering. <br> 
+      Use <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
+        "
+      </kbd> in search for exact matches. <br> 
+      Use <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
+        !
+      </kbd> in search to exclude matches.</p>
   </article>
   <table id="data" class="hover stripe row-border">
     <thead class="text-lg">
       <tr>
-        <th>Name</th><th>#</th><th>Results</th><th class="text-end">%</th><th>Protocols</th><th class="text-end">%</th>
+        <th>Name</th>
+        <th>#</th>
+        <th>Reported Protocols</th>
+        {# <th class="text-end">%</th> #}
+        <th>Reported Results</th>
+        {# <th class="text-end">%</th> #}
       </tr>
     </thead>
     <tbody>
+    {% set maxNumStudies = funding | map("num_studies") | max %}
     {%- for entry in funding -%}
+
+      {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
+        {% set resultPercentage = (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) %}
+      {% endif %}
+
+      {% if entry.number_of_studies_with_past_data_collection > 0 %}
+        {% set protocolPercentage = (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) %}
+      {% endif %}
+
       <tr>
         <td class="text-lg *:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600">
           <a class="underline-offset-4 decoration-2 {% if entry.name | isSpecialFunding %} underline decoration-dotted {% endif %}" href="/details/{{ entry.name | transformFunding | slugify }}">{{ entry.name | transformFunding }}</a>
@@ -34,22 +60,44 @@ js:
         <td>
           {{ entry.num_studies }}
         </td>
-        <td class="text-center">
-          {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
+        <td class="min-w-40" data-order="{{ protocolPercentage + entry.number_of_studies_with_past_data_collection / maxNumStudies }}" data-search="{{ protocolPercentage }} {{ entry.number_of_studies_with_past_data_collection_and_protocols }} {{ entry.number_of_studies_with_past_data_collection }}">
+          <div>
+            <div class="mb-2 flex justify-between items-center">
+              <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}</h3>
+              <span class="text-sm text-gray-800">{{ protocolPercentage }}%</span>
+            </div>
+            <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ protocolPercentage }}" aria-valuemin="0" aria-valuemax="100">
+              <div class="flex flex-col justify-center rounded-full overflow-hidden bg-indigo-600 text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{ protocolPercentage }}%"></div>
+            </div>
+          </div>
         </td>
-        <td class="text-end">
-          {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-            {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
-          {% endif %}
-        </td>
-        <td class="text-center">
+        {# <td class="text-center">
           {{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}
         </td>
         <td class="text-end">
           {% if entry.number_of_studies_with_past_data_collection > 0 %}
             {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) }}%
           {% endif %}
+        </td> #}
+        <td class="min-w-40" data-order="{{ resultPercentage + entry.number_of_studies_with_two_weeks_past_final_report / maxNumStudies }}" data-search="{{ resultPercentage }} {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} {{ entry.number_of_studies_with_two_weeks_past_final_report }}">
+          <div>
+            <div class="mb-2 flex justify-between items-center">
+              <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}</h3>
+              <span class="text-sm text-gray-800">{{ resultPercentage }}%</span>
+            </div>
+            <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ resultPercentage }}" aria-valuemin="0" aria-valuemax="100">
+              <div class="flex flex-col justify-center rounded-full overflow-hidden bg-indigo-600 text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{ resultPercentage }}%"></div>
+            </div>
+          </div>
         </td>
+        {# <td class="text-center">
+          {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
+        </td>
+        <td class="text-end">
+          {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
+            {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
+          {% endif %}
+        </td> #}
       </tr>
     {%- endfor -%}
     </tbody>

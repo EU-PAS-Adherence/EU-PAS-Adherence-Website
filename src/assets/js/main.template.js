@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function(_) {
     // const height = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
 
     // const header = document.getElementById('data').querySelector('thead');
@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     const table = new DataTable('#data', {
         // scrollY: height * 0.5,
+        scrollX: true,
         pageLength: 50,
         lengthMenu: [50, 100, 250, { label: 'All', value: -1 }],
         // stateSave: true,

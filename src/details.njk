@@ -4,6 +4,7 @@ title: Details
 css:
   - tailwind.css
 js:
+  - header.js
   - https://cdn.jsdelivr.net/npm/apexcharts
   - details.js
 pagination:
@@ -16,14 +17,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
     <article class="my-24 max-w-3xl">
         <h1 class="text-2xl">{{ entry.name | transformFunding }}</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
-        <div id="chart" 
-            data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
-            data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
-            data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
-            data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
-            data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
-        ></div>
-        <p class="mt-8">
+        {# <p class="mt-8">
             number_of_collaborations_with_research_network: {{ entry.number_of_collaborations_with_research_network }} <br>
             number_of_countries: {{ entry.number_of_countries }} <br>
             set_of_countries: {{ entry.set_of_countries }} <br>
@@ -40,14 +34,32 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             number_of_studies_with_rmp_1_(imposed_as_condition_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }} <br>
             number_of_studies_with_rmp_2_(specific_obligation_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }} <br>
             number_of_studies_with_rmp_3_(required): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }} <br>
-            number_of_studies_with_rmp_not_applicable: {{ entry.number_of_studies_with_risk_management_plan_not_applicable }} <br>
             number_of_studies_with_rmp_non-eu_rmp_only: {{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }} <br>
+            number_of_studies_with_rmp_not_applicable: {{ entry.number_of_studies_with_risk_management_plan_not_applicable }} <br>
+            number_of_studies_with_rmp_nan: {{ entry.number_of_studies_with_risk_management_plan_nan }} <br>
             number_of_studies_with_result: {{ entry.number_of_studies_with_result }} <br>
             number_of_studies_with_protocol: {{ entry.number_of_studies_with_protocol }} <br>
             number_of_studies_with_past_data_collection: {{ entry.number_of_studies_with_past_data_collection }} <br>
             number_of_studies_with_past_data_collection_and_protocols: {{ entry.number_of_studies_with_past_data_collection_and_protocols }} <br>
             number_of_studies_with_two_weeks_past_final_report: {{ entry.number_of_studies_with_two_weeks_past_final_report }} <br>
             number_of_studies_with_two_weeks_past_final_report_and_results: {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} <br>
-        </p>
+        </p> #}
     </article>
+    <div class="flex flex-col gap-8">
+        <div id="docsBar"
+            data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
+            data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
+            data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
+            data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
+        ></div>
+        <div id="rmpPie" 
+            data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
+            data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
+            data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
+            data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
+            data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
+            data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
+        ></div>
+    </div>
+    
 </main>
