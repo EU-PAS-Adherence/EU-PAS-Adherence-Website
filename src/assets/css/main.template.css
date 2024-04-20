@@ -1,0 +1,4 @@
+table.dataTable thead > tr > th > span.dt-column-order::before, table.dataTable thead > tr > th > span.dt-column-order::after {
+    /* QUICK FIX for arrow gap */
+    line-height: 12px !important; 
+}
