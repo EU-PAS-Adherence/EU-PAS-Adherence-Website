@@ -69,4 +69,22 @@ document.addEventListener("DOMContentLoaded", function(_) {
 
     rmpPieChart.render();
     documentBarChart.render();
+
+    const mapContainer = document.getElementById('map');
+
+    const map = new Datamap({
+        element: mapContainer,
+        projection: 'mercator',
+        geographyConfig: {
+            highlightOnHover: false,
+            popupOnHover: true
+        },
+        fills: {
+            study_centre: '#775dd0',
+            defaultFill: '#e2e8f0'
+        },
+        data: mapContainer.dataset.countries.split('; ').reduce((a, v) => ({ ...a, [v]: {
+            "fillKey": "study_centre",
+        }}), {})
+    });
 });

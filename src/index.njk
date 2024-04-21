@@ -46,25 +46,25 @@ js:
     {%- for entry in funding -%}
 
       {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-        {% set resultPercentage = (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) %}
+        {% set resultPercentage = (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(1) %}
       {% endif %}
 
       {% if entry.number_of_studies_with_past_data_collection > 0 %}
-        {% set protocolPercentage = (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) %}
+        {% set protocolPercentage = (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(1) %}
       {% endif %}
 
       <tr>
         <td class="text-lg *:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600">
           <a class="underline-offset-4 decoration-2 {% if entry.name | isSpecialFunding %} underline decoration-dotted {% endif %}" href="/details/{{ entry.name | transformFunding | slugify }}">{{ entry.name | transformFunding }}</a>
         </td>
-        <td>
+        <td class="tabular-nums">
           {{ entry.num_studies }}
         </td>
         <td class="min-w-40" data-order="{{ protocolPercentage + entry.number_of_studies_with_past_data_collection / maxNumStudies }}" data-search="{{ protocolPercentage }} {{ entry.number_of_studies_with_past_data_collection_and_protocols }} {{ entry.number_of_studies_with_past_data_collection }}">
           <div>
             <div class="mb-2 flex justify-between items-center">
               <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}</h3>
-              <span class="text-sm text-gray-800">{{ protocolPercentage }}%</span>
+              <span class="text-sm text-gray-800 tabular-nums">{{ protocolPercentage }}%</span>
             </div>
             <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ protocolPercentage }}" aria-valuemin="0" aria-valuemax="100">
               <div class="flex flex-col justify-center rounded-full overflow-hidden bg-indigo-600 text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{ protocolPercentage }}%"></div>
@@ -76,14 +76,14 @@ js:
         </td>
         <td class="text-end">
           {% if entry.number_of_studies_with_past_data_collection > 0 %}
-            {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(2) }}%
+            {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(1) }}%
           {% endif %}
         </td> #}
         <td class="min-w-40" data-order="{{ resultPercentage + entry.number_of_studies_with_two_weeks_past_final_report / maxNumStudies }}" data-search="{{ resultPercentage }} {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} {{ entry.number_of_studies_with_two_weeks_past_final_report }}">
           <div>
             <div class="mb-2 flex justify-between items-center">
               <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}</h3>
-              <span class="text-sm text-gray-800">{{ resultPercentage }}%</span>
+              <span class="text-sm text-gray-800 tabular-nums">{{ resultPercentage }}%</span>
             </div>
             <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ resultPercentage }}" aria-valuemin="0" aria-valuemax="100">
               <div class="flex flex-col justify-center rounded-full overflow-hidden bg-indigo-600 text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{ resultPercentage }}%"></div>
@@ -95,7 +95,7 @@ js:
         </td>
         <td class="text-end">
           {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-            {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(2) }}%
+            {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(1) }}%
           {% endif %}
         </td> #}
       </tr>

@@ -6,6 +6,9 @@ css:
 js:
   - header.js
   - https://cdn.jsdelivr.net/npm/apexcharts
+  - https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js
+  - library/datamaps.world.min.js
   - details.js
 pagination:
   data: funding
@@ -60,6 +63,14 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
             data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
         ></div>
+    </div>
+
+    {# <div>
+        {{ entry.set_of_countries | getCountryCodes }}
+    </div> #}
+
+    <div id="map" class="relative w-full aspect-square" data-countries="{{ entry.set_of_countries | getCountryCodes }}">
+
     </div>
     
 </main>

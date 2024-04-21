@@ -4,6 +4,9 @@ const htmlmin = require("html-minifier");
 const CleanCSS = require("clean-css");
 const UglifyJS = require("uglify-js");
 
+const fs = require('fs');
+const CSV = require("csv-parse/sync");
+
 module.exports = function(eleventyConfig){
     eleventyConfig.setServerOptions({
       liveReload: true,
@@ -20,6 +23,7 @@ module.exports = function(eleventyConfig){
     eleventyConfig.addWatchTarget("src/assets/images/*.svg");
 
     // PASSTHROUGH
+    eleventyConfig.addPassthroughCopy("src/assets/js/library/*.js");
     eleventyConfig.addPassthroughCopy("src/assets/icon/*");
     eleventyConfig.addPassthroughCopy("src/assets/images/*");
     eleventyConfig.addPassthroughCopy("src/assets/fonts/**/*.woff2");
@@ -87,7 +91,22 @@ module.exports = function(eleventyConfig){
 
     eleventyConfig.addFilter("max", function(array) {
       return Math.max(...array);
-    })
+    });
+
+    const countries_input = fs.readFileSync("./countries_manual.csv");
+    const countries_records = CSV.parse(countries_input, {
+      delimiter: ';', // ONLY USED FOR COUNTRY CSV which has , in values and uses ; as delimiter
+      columns: true,
+      skip_empty_lines: true,
+      bom: true // WHY NOT DEFAULT, cant access first column if not true
+    });
+    const countries_map = countries_records.filter((x) => x.original !== '').reduce((prev, cur) => ({ ...prev, [cur.original]: cur.iso }), {});
+
+    // TODO: Add some sort of assertion
+    eleventyConfig.addFilter("getCountryCodes", function(value) {
+      // console.log(value.split('; '));
+      return value.split('; ').map((x) => countries_map[x]).join('; ');
+    });
 
     // TRANSFORMS
     eleventyConfig.addTransform("htmlmin", function(content) {
