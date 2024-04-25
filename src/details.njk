@@ -48,14 +48,18 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             number_of_studies_with_two_weeks_past_final_report_and_results: {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} <br>
         </p> #}
     </article>
-    <div class="flex flex-col gap-8">
+
+    <div class="my-8">
         <div id="docsBar"
             data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
             data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
             data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
             data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
         ></div>
-        <div id="rmpPie" 
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8 justify-stretch">
+        <div id="rmpPie" class="w-full"
             data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
             data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
             data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
@@ -63,14 +67,32 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
             data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
         ></div>
+        <div id="statePie" class="w-full"
+            data-planned="{{ entry.number_of_studies_with_updated_state_planned }}"
+            data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
+            data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
+        ></div>
     </div>
-
-    {# <div>
-        {{ entry.set_of_countries | getCountryCodes }}
-    </div> #}
 
     <div id="map" class="relative w-full aspect-square" data-countries="{{ entry.set_of_countries | getCountryCodes }}">
 
     </div>
-    
+
+    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5">
+        <h3 class="text-lg font-bold text-gray-800">
+            Study countries
+        </h3>
+        <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+            {{ entry.name | transformFunding }}
+        </p>
+        <p class="mt-2 text-gray-500">
+            Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
+        </p>
+        <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
+            {% for country in entry.set_of_countries | split('; ') %}
+                <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+ 
 </main>

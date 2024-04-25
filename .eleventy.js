@@ -6,6 +6,7 @@ const UglifyJS = require("uglify-js");
 
 const fs = require('fs');
 const CSV = require("csv-parse/sync");
+const { sep } = require("path");
 
 module.exports = function(eleventyConfig){
     eleventyConfig.setServerOptions({
@@ -93,12 +94,16 @@ module.exports = function(eleventyConfig){
       return Math.max(...array);
     });
 
+    eleventyConfig.addFilter("split", function(value, seperator) {
+      return value.split(seperator);
+    });
+
     const countries_input = fs.readFileSync("./countries_manual.csv");
     const countries_records = CSV.parse(countries_input, {
       delimiter: ';', // ONLY USED FOR COUNTRY CSV which has , in values and uses ; as delimiter
       columns: true,
       skip_empty_lines: true,
-      bom: true // WHY NOT DEFAULT, cant access first column if not true
+      bom: true // WHY NOT DEFAULT, cant access first column if not true: https://csv.js.org/parse/options/bom/#hidden-bom-in-output
     });
     const countries_map = countries_records.filter((x) => x.original !== '').reduce((prev, cur) => ({ ...prev, [cur.original]: cur.iso }), {});
 

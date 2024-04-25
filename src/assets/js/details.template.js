@@ -34,6 +34,37 @@ document.addEventListener("DOMContentLoaded", function(_) {
         return new ApexCharts(chartContainer, options);
     })();
 
+    const statePieChart = (() => {
+        const chartContainer = document.getElementById('statePie');
+
+        const options = {
+            chart: {
+                type: 'donut'
+            },
+            series: [
+                parseInt(chartContainer.dataset.planned), 
+                parseInt(chartContainer.dataset.ongoing), 
+                parseInt(chartContainer.dataset.finalised)
+            ],
+            labels: ['Planned', 'Ongoing', 'Finalised'],
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '60%',
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return new ApexCharts(chartContainer, options);
+    })();
+
     const documentBarChart = (() => {
         const barContainer = document.getElementById('docsBar');
 
@@ -68,23 +99,38 @@ document.addEventListener("DOMContentLoaded", function(_) {
     
 
     rmpPieChart.render();
+    statePieChart.render();
     documentBarChart.render();
 
     const mapContainer = document.getElementById('map');
 
     const map = new Datamap({
         element: mapContainer,
+        responsive: true,
         projection: 'mercator',
+        aspectRatio: 1,
         geographyConfig: {
-            highlightOnHover: false,
-            popupOnHover: true
+            hideAntarctica: true,
+            borderWidth: 1.2,
+            // borderOpacity: 1,
+            // borderColor: '#212121',
+            popupTemplate: function(geography, data) { //this function should just return a string
+              return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-300">' + geography.properties.name + '</span>';
+            },
+            popupOnHover: true,
+            highlightOnHover: false
         },
         fills: {
-            study_centre: '#775dd0',
+            study_centre: '#6d28d9',
             defaultFill: '#e2e8f0'
         },
         data: mapContainer.dataset.countries.split('; ').reduce((a, v) => ({ ...a, [v]: {
             "fillKey": "study_centre",
         }}), {})
     });
+
+    window.addEventListener('resize', function(event){
+        map.resize();
+    });
+
 });
