@@ -2,9 +2,15 @@
 layout: base.njk
 title: Details
 css:
+  - custom.css
   - tailwind.css
+  - https://cdn.datatables.net/2.0.4/css/dataTables.dataTables.min.css
+  - https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.min.css
 js:
   - header.js
+  - https://code.jquery.com/jquery-3.7.1.min.js
+  - https://cdn.datatables.net/2.0.4/js/dataTables.min.js
+  - https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js
   - https://cdn.jsdelivr.net/npm/apexcharts
   - https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js
   - https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js
@@ -16,21 +22,13 @@ pagination:
   alias: entry
 permalink: "details/{{ entry.name | transformFunding | slugify }}/"
 ---
-<main class="max-w-5xl p-4 mx-auto">
-    <article class="my-24 max-w-3xl">
+<main class="flex flex-col gap-8 max-w-5xl p-4 mx-auto">
+    <article class="mt-24 max-w-3xl">
         <h1 class="text-2xl">{{ entry.name | transformFunding }}</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus rerum laborum doloribus possimus incidunt soluta corrupti maiores animi! Corrupti provident nemo tempora ullam repellat dicta saepe esse repellendus quis totam?</p>
         {# <p class="mt-8">
-            number_of_collaborations_with_research_network: {{ entry.number_of_collaborations_with_research_network }} <br>
             number_of_countries: {{ entry.number_of_countries }} <br>
             set_of_countries: {{ entry.set_of_countries }} <br>
-            min_number_of_subjects: {{ entry.min_number_of_subjects }} <br>
-            max_number_of_subjects: {{ entry.max_number_of_subjects }} <br>
-            mean_number_of_subjects: {{ entry.mean_number_of_subjects }} <br>
-            median_number_of_subjects: {{ entry.median_number_of_subjects }} <br>
-            number_of_studies_with_outcomes: {{ entry.number_of_studies_with_outcomes }} <br>
-            number_of_studies_requested_by_regulator: {{ entry.number_of_studies_requested_by_regulator }} <br>
-            number_of_studies_using_established_data_sources: {{ entry.number_of_studies_using_established_data_sources }} <br>
             number_of_studies_with_updated_state_finalised: {{ entry.number_of_studies_with_updated_state_finalised }} <br>
             number_of_studies_with_updated_state_ongoing: {{ entry.number_of_studies_with_updated_state_ongoing }} <br>
             number_of_studies_with_updated_state_planned: {{ entry.number_of_studies_with_updated_state_planned }} <br>
@@ -46,17 +44,16 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             number_of_studies_with_past_data_collection_and_protocols: {{ entry.number_of_studies_with_past_data_collection_and_protocols }} <br>
             number_of_studies_with_two_weeks_past_final_report: {{ entry.number_of_studies_with_two_weeks_past_final_report }} <br>
             number_of_studies_with_two_weeks_past_final_report_and_results: {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} <br>
+            study_ids: {{ entry.study_ids }} 
         </p> #}
     </article>
 
-    <div class="my-8">
-        <div id="docsBar"
-            data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
-            data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
-            data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
-            data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
-        ></div>
-    </div>
+    <div id="docsBar"
+        data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
+        data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
+        data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
+        data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
+    ></div>
 
     <div class="flex flex-col lg:flex-row gap-8 justify-stretch">
         <div id="rmpPie" class="w-full"
@@ -74,25 +71,59 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         ></div>
     </div>
 
-    <div id="map" class="relative w-full aspect-square" data-countries="{{ entry.set_of_countries | getCountryCodes }}">
+    <div>
+        <div id="map" class="relative w-full aspect-square" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
 
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5 my-8">
+            <h3 class="text-lg font-bold text-gray-800">
+                Study countries
+            </h3>
+            <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                {{ entry.name | transformFunding }}
+            </p>
+            <p class="mt-2 text-gray-500">
+                Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
+            </p>
+            <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
+                {% for country in entry.set_of_countries | split('; ') %}
+                    <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
-    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5">
-        <h3 class="text-lg font-bold text-gray-800">
-            Study countries
-        </h3>
-        <p class="mt-1 text-xs font-medium uppercase text-gray-500">
-            {{ entry.name | transformFunding }}
-        </p>
-        <p class="mt-2 text-gray-500">
-            Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
-        </p>
-        <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
-            {% for country in entry.set_of_countries | split('; ') %}
-                <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
-            {% endfor %}
-        </ul>
+    <div class="my-8">
+        <table id="data" class="hover stripe row-border">
+            <thead class="text-lg">
+                <tr>
+                    <th class="dt-head-left">EU&nbsp;PAS&nbsp;ID</th>
+                    <th class="dt-head-left">State</th>
+                    <th class="dt-head-left">Title</th>
+                    <th class="dt-head-left">Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id in entry.study_ids | split('; ') %}
+                <tr>
+                    <td class="tabular-nums">
+                        {{ id }}
+                    </td>
+                    <td>
+                        {{ studies[id].state }}
+                    </td>
+                    <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600">
+                        <a target="_blank" class="underline-offset-4 decoration-2 external-link" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>
+                    </td>
+                    <td class="tabular-nums">
+                        {{ studies[id].registration_date | date }}
+                    </td>
+                </tr>
+                {%- endfor -%}
+            </tbody>
+            {# <caption>
+            List of all funders with percentages of reported protocols and results.
+            </caption> #}
+        </table>
     </div>
  
 </main>

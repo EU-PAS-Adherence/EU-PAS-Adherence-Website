@@ -1,6 +1,15 @@
 @tailwind base;
 
 @layer base {
+    .external-link::after {
+        @apply w-3;
+        @apply h-3;
+        @apply ms-1;
+        @apply inline-block;
+        content: " ";
+        background-size: .75rem .75rem;
+        background-image: url(/assets/images/external_link.svg);
+      }
 }
 
 @tailwind components;

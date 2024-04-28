@@ -1,11 +1,30 @@
 document.addEventListener("DOMContentLoaded", function(_) {
 
+    const table = new DataTable('#data', {
+        scrollX: true,
+        pageLength: 50,
+        lengthMenu: [50, 100, 250, { label: 'All', value: -1 }],
+        // stateSave: true,
+        stateDuration: -1, // 0 for localStorage indefinetly or positive number for specific time, -1 for Session Storage
+        order: {
+            idx: 0,
+            dir: 'asc'
+        },
+        fixedHeader: {
+            header: true,
+            headerOffset: 0
+        }
+    });
+
     const rmpPieChart = (() => {
         const chartContainer = document.getElementById('rmpPie');
 
         const options = {
             chart: {
-                type: 'donut'
+                type: 'donut',
+                zoom: {
+                    enabled: false
+                }
             },
             series: [
                 parseInt(chartContainer.dataset.rmp1), 
@@ -28,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function(_) {
                         }
                     }
                 }
-            }
+            },
+            colors: ['#dc2626', '#ea580c', '#facc15', '#22c55e', '#2563eb', '#7e22ce']
         }
         
         return new ApexCharts(chartContainer, options);
@@ -39,7 +59,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
 
         const options = {
             chart: {
-                type: 'donut'
+                type: 'donut',
+                zoom: {
+                    enabled: false
+                }
             },
             series: [
                 parseInt(chartContainer.dataset.planned), 
@@ -59,7 +82,8 @@ document.addEventListener("DOMContentLoaded", function(_) {
                         }
                     }
                 }
-            }
+            },
+            colors: ['#14b8a6', '#0284c7', '#6d28d9']
         }
         
         return new ApexCharts(chartContainer, options);
@@ -71,7 +95,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
         const options = {
             chart: {
                 type: 'bar',
-                stacked: true
+                stacked: true,
+                zoom: {
+                    enabled: false
+                }
             },
             series: [{
                 name: 'Reported',

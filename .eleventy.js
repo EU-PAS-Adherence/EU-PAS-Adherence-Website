@@ -98,6 +98,16 @@ module.exports = function(eleventyConfig){
       return value.split(seperator);
     });
 
+    eleventyConfig.addFilter("date", function(value) {
+      const date = new Date(value);
+      const [month, day, year] = [
+        date.getMonth(),
+        date.getDate(),
+        date.getFullYear(),
+      ];
+      return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    });
+
     const countries_input = fs.readFileSync("./countries_manual.csv");
     const countries_records = CSV.parse(countries_input, {
       delimiter: ';', // ONLY USED FOR COUNTRY CSV which has , in values and uses ; as delimiter
