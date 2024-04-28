@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
         // stateSave: true,
         stateDuration: -1, // 0 for localStorage indefinetly or positive number for specific time, -1 for Session Storage
         order: {
-            idx: 0,
+            idx: 3,
             dir: 'asc'
         },
         fixedHeader: {
@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 type: 'donut',
                 zoom: {
                     enabled: false
-                }
+                },
+                // redrawOnParentResize: false
             },
             series: [
                 parseInt(chartContainer.dataset.rmp1), 
@@ -62,7 +63,8 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 type: 'donut',
                 zoom: {
                     enabled: false
-                }
+                },
+                // redrawOnParentResize: false
             },
             series: [
                 parseInt(chartContainer.dataset.planned), 
@@ -129,13 +131,13 @@ document.addEventListener("DOMContentLoaded", function(_) {
     statePieChart.render();
     documentBarChart.render();
 
-    const mapContainer = document.getElementById('map');
+    const mapContainer = document.getElementById('mapChart');
 
     const map = new Datamap({
         element: mapContainer,
         responsive: true,
         projection: 'mercator',
-        aspectRatio: 1,
+        aspectRatio: 3 / 4,
         geographyConfig: {
             hideAntarctica: true,
             borderWidth: 1.2,
@@ -148,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
             highlightOnHover: false
         },
         fills: {
-            study_centre: '#6d28d9',
+            study_centre: '#4338ca',
             defaultFill: '#e2e8f0'
         },
         data: mapContainer.dataset.countries.split('; ').reduce((a, v) => ({ ...a, [v]: {
@@ -159,5 +161,25 @@ document.addEventListener("DOMContentLoaded", function(_) {
     window.addEventListener('resize', function(event){
         map.resize();
     });
+
+    const tabsRadio = document.querySelectorAll('input[name="tab"]');
+    const tabMap = Array.from(tabsRadio).reduce((prev, cur) => ({ ...prev, [cur.id]: document.getElementById(`${cur.id}Container`) }), {});
+    function changeTab(current) {
+        for (let [id, container] of Object.entries(tabMap)) {
+            if (id == current) {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+    }
+
+    for (element of tabsRadio) {
+        element.addEventListener('change', function(event) {
+            changeTab(event.target.id);
+        });
+    }
+
+    changeTab(Array.from(tabsRadio).filter((element) => element.checked)[0].id);
 
 });

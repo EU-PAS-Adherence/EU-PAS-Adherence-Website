@@ -55,7 +55,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
     ></div>
 
-    <div class="flex flex-col lg:flex-row gap-8 justify-stretch">
+    {# <div class="flex flex-col lg:flex-row gap-8 justify-stretch">
         <div id="rmpPie" class="w-full"
             data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
             data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
@@ -69,10 +69,87 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
             data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
         ></div>
+    </div> #}
+
+    <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+        <div class="bg-gray-100 border-b rounded-t-xl pt-3 px-4 md:pt-4 md:px-5">
+            <nav class="flex space-x-2" aria-label="Tabs">
+                
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                    RMP
+                    <input class="sr-only" type="radio" name="tab" id="rmp" checked/>
+                </label>
+
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                    State
+                    <input class="sr-only" type="radio" name="tab" id="state"/>
+                </label>
+
+                {# <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                    Map
+                    <input class="sr-only" type="radio" name="tab" id="map"/>
+                </label> #}
+
+            </nav>
+        </div>
+        <div class="p-4 md:py-7 md:px-5">
+            
+            <div id="rmpContainer">
+                <h3 class="text-lg font-bold text-gray-800">
+                RMP
+                </h3>
+                <p class="mt-2 text-gray-500">
+                    With supporting text below as a natural lead-in to additional content.
+                </p>
+                <div id="rmpPie" class="max-w-2xl mx-auto my-12"
+                    data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
+                    data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
+                    data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
+                    data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
+                    data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
+                    data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
+                ></div>
+            </div>
+
+            <div id="stateContainer" class="hidden">
+                <h3 class="text-lg font-bold text-gray-800">
+                State
+                </h3>
+                <p class="mt-2 text-gray-500">
+                    With supporting text below as a natural lead-in to additional content.
+                </p>
+                <div id="statePie" class="max-w-2xl mx-auto my-12"
+                    data-planned="{{ entry.number_of_studies_with_updated_state_planned }}"
+                    data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
+                    data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
+                ></div>
+            </div>
+
+            {# <div id="mapContainer" class="hidden">
+                <h3 class="text-lg font-bold text-gray-800">
+                    Study countries
+                </h3>
+                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                    {{ entry.name | transformFunding }}
+                </p>
+                <p class="mt-2 text-gray-500">
+                    Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
+                </p>
+                <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
+                    {% for country in entry.set_of_countries | split('; ') %}
+                        <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
+                    {% endfor %}
+                </ul>
+                
+                <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
+                
+            </div> #}
+            
+        </div>
     </div>
 
     <div>
-        <div id="map" class="relative w-full aspect-square" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
+        <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
 
         <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5 my-8">
             <h3 class="text-lg font-bold text-gray-800">
@@ -108,8 +185,50 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                     <td class="tabular-nums">
                         {{ id }}
                     </td>
-                    <td>
-                        {{ studies[id].state }}
+                    <td class="">
+                        {% set text_color = 'text-indigo-800' %}
+                        {% set bg_color = 'bg-indigo-100' %}
+                        {% set badge_element %}
+                            <span class="size-2 mx-1 inline-block rounded-full bg-indigo-800"></span>
+                        {% endset %}
+                        {% if studies[id].state == 'Planned' %}
+                            {% set text_color = 'text-slate-900' %}
+                            {% set bg_color = 'bg-slate-200' %}
+                            {% set badge_element %}
+                                <svg class="flex-shrink-0 size-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path d="M128 0c13.3 0 24 10.7 24 24V64H296V24c0-13.3 10.7-24 24-24s24 10.7 24 24V64h40c35.3 0 64 28.7 64 64v16 48V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192 144 128C0 92.7 28.7 64 64 64h40V24c0-13.3 10.7-24 24-24zM400 192H48V448c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V192zm-95 89l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                </svg>
+                            {% endset %}
+                        {% elif studies[id].state == 'Ongoing' %}
+                            {% set text_color = 'text-indigo-800' %}
+                            {% set bg_color = 'bg-indigo-100' %}
+                            {% set badge_element %}
+                                <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" x2="12" y1="2" y2="6"></line>
+                                    <line x1="12" x2="12" y1="18" y2="22"></line>
+                                    <line x1="4.93" x2="7.76" y1="4.93" y2="7.76"></line>
+                                    <line x1="16.24" x2="19.07" y1="16.24" y2="19.07"></line>
+                                    <line x1="2" x2="6" y1="12" y2="12"></line>
+                                    <line x1="18" x2="22" y1="12" y2="12"></line>
+                                    <line x1="4.93" x2="7.76" y1="19.07" y2="16.24"></line>
+                                    <line x1="16.24" x2="19.07" y1="7.76" y2="4.93"></line>
+                                </svg>
+                            {% endset %}
+                        {% elif studies[id].state == 'Finalised' %}
+                            {% set text_color = 'text-emerald-800' %}
+                            {% set bg_color = 'bg-emerald-100' %}
+                            {% set badge_element %}
+                                <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="m9 12 2 2 4-4"></path>
+                                </svg>
+                            {% endset %}
+                        {% endif %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-sm font-medium {{ text_color }} {{ bg_color }}">
+                            {{ badge_element | safe }}
+                            {{ studies[id].state }}
+                        </span>
                     </td>
                     <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600">
                         <a target="_blank" class="underline-offset-4 decoration-2 external-link" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>
