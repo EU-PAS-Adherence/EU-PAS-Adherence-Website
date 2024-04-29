@@ -1,9 +1,13 @@
+function buildBadge(text) {
+    return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-300">' + text + '</span>'; 
+}
+
 document.addEventListener("DOMContentLoaded", function(_) {
 
     const table = new DataTable('#data', {
         scrollX: true,
         pageLength: 50,
-        lengthMenu: [50, 100, 250, { label: 'All', value: -1 }],
+        lengthMenu: [25, 50, 100, { label: 'All', value: -1 }],
         // stateSave: true,
         stateDuration: -1, // 0 for localStorage indefinetly or positive number for specific time, -1 for Session Storage
         order: {
@@ -22,20 +26,11 @@ document.addEventListener("DOMContentLoaded", function(_) {
         const options = {
             chart: {
                 type: 'donut',
-                zoom: {
-                    enabled: false
-                },
+                fontFamily: 'inherit',
                 // redrawOnParentResize: false
             },
-            series: [
-                parseInt(chartContainer.dataset.rmp1), 
-                parseInt(chartContainer.dataset.rmp2), 
-                parseInt(chartContainer.dataset.rmp3), 
-                parseInt(chartContainer.dataset.rmpNonEu), 
-                parseInt(chartContainer.dataset.rmpNa),
-                parseInt(chartContainer.dataset.rmpNs)
-            ],
-            labels: ['RMP1', 'RMP2', 'RMP3', 'Non EU RMP', 'Not assigned', 'Not specified'],
+            colors: ['#dc2626', '#ea580c', '#facc15', '#22c55e', '#2563eb', '#7e22ce'],
+            labels: ['RMP Category 1', 'RMP Category 2', 'RMP Category 3', 'Non EU RMP', 'No RMP', 'Not specified'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -49,7 +44,50 @@ document.addEventListener("DOMContentLoaded", function(_) {
                     }
                 }
             },
-            colors: ['#dc2626', '#ea580c', '#facc15', '#22c55e', '#2563eb', '#7e22ce']
+            responsive: [
+                {
+                    breakpoint: 600,
+                    options: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    },
+                }
+            ],
+            series: [
+                parseInt(chartContainer.dataset.rmp1), 
+                parseInt(chartContainer.dataset.rmp2), 
+                parseInt(chartContainer.dataset.rmp3), 
+                parseInt(chartContainer.dataset.rmpNonEu), 
+                parseInt(chartContainer.dataset.rmpNa),
+                parseInt(chartContainer.dataset.rmpNs)
+            ],
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'lighten',
+                        value: 0.01,
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'darken',
+                        value: 0.75,
+                    }
+                },
+            },
+            tooltip: {
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                    return '<div>' + buildBadge(w.globals.labels[seriesIndex] + ': ' + series[seriesIndex]) + '</div>';
+                }
+            }
         }
         
         return new ApexCharts(chartContainer, options);
@@ -61,16 +99,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
         const options = {
             chart: {
                 type: 'donut',
-                zoom: {
-                    enabled: false
-                },
+                fontFamily: 'inherit',
                 // redrawOnParentResize: false
             },
-            series: [
-                parseInt(chartContainer.dataset.planned), 
-                parseInt(chartContainer.dataset.ongoing), 
-                parseInt(chartContainer.dataset.finalised)
-            ],
+            colors: ['#14b8a6', '#0284c7', '#6d28d9'],
             labels: ['Planned', 'Ongoing', 'Finalised'],
             plotOptions: {
                 pie: {
@@ -85,7 +117,47 @@ document.addEventListener("DOMContentLoaded", function(_) {
                     }
                 }
             },
-            colors: ['#14b8a6', '#0284c7', '#6d28d9']
+            responsive: [
+                {
+                    breakpoint: 600,
+                    options: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    },
+                }
+            ],
+            series: [
+                parseInt(chartContainer.dataset.planned), 
+                parseInt(chartContainer.dataset.ongoing), 
+                parseInt(chartContainer.dataset.finalised)
+            ],
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'lighten',
+                        value: 0.01,
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'darken',
+                        value: 0.75,
+                    }
+                },
+            },
+            tooltip: {
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                    return '<div>' + buildBadge(w.globals.labels[seriesIndex] + ': ' + series[seriesIndex]) + '</div>';
+                }
+            }
         }
         
         return new ApexCharts(chartContainer, options);
@@ -98,9 +170,31 @@ document.addEventListener("DOMContentLoaded", function(_) {
             chart: {
                 type: 'bar',
                 stacked: true,
-                zoom: {
-                    enabled: false
-                }
+                stackType: 'normal',
+                // stackType: '100%',
+                fontFamily: 'inherit',
+                toolbar: {
+                    show: false 
+                },
+                height: '100%'
+            },
+            grid: {
+                show: false,
+            },
+            legend: {
+                show: false,
+            },
+            plotOptions: {
+                bar: {
+                    // horizontal: true,
+                    columnWidth: '50%',
+                    barHeight: '75%',
+                    dataLabels: {
+                        total: {
+                            enabled: true
+                        }
+                    }
+                },
             },
             series: [{
                 name: 'Reported',
@@ -109,17 +203,38 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 name: 'Not reported',
                 data: [parseInt(barContainer.dataset.pastCollection) - parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReport) - parseInt(barContainer.dataset.pastReportWithResults)]
             }],
-            plotOptions: {
-                bar: {
-                  dataLabels: {
-                    total: {
-                      enabled: true
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
                     }
-                  }
+                },
+                hover: {
+                    filter: {
+                        type: 'lighten',
+                        value: 0.01,
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'darken',
+                        value: 0.75,
+                    }
                 },
             },
             xaxis: {
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false,
+                },          
                 categories: ['Protocols', 'Results']
+            },
+            yaxis: {
+                show: false,
             }
         }
         
@@ -135,16 +250,18 @@ document.addEventListener("DOMContentLoaded", function(_) {
 
     const map = new Datamap({
         element: mapContainer,
+        height: 300,
+        width: 400,
         responsive: true,
         projection: 'mercator',
         aspectRatio: 3 / 4,
         geographyConfig: {
             hideAntarctica: true,
-            borderWidth: 1.2,
+            // borderWidth: 1.2,
             // borderOpacity: 1,
             // borderColor: '#212121',
-            popupTemplate: function(geography, data) { //this function should just return a string
-              return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-300">' + geography.properties.name + '</span>';
+            popupTemplate: function(geography, data) {
+              return buildBadge(geography.properties.name);
             },
             popupOnHover: true,
             highlightOnHover: false
@@ -171,6 +288,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
             } else {
                 container.classList.add('hidden');
             }
+        }
+
+        if (current = "map") {
+            map.resize();
         }
     }
 
