@@ -28,14 +28,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         <p>
             This sponsor has funded <span class="font-semibold">{{ entry.num_studies }} studies</span> across <span class="font-semibold">{{ entry.number_of_countries }} countries</span>.
         </p>
-        <div class="w-full aspect-square max-w-lg mx-auto">
-            <div id="docsBar"
-            data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
-            data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
-            data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
-            data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
-            ></div>
-        </div>
+        
         {# <p class="mt-8">
             number_of_countries: {{ entry.number_of_countries }} <br>
             set_of_countries: {{ entry.set_of_countries }} <br>
@@ -57,6 +50,15 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             study_ids: {{ entry.study_ids }} 
         </p> #}
     </article>
+
+    <div class="w-full aspect-square max-w-lg mx-auto">
+        <div id="docsBar"
+        data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
+        data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
+        data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
+        data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
+        ></div>
+    </div>
 
     <div class="flex flex-col bg-white border shadow-sm rounded-xl">
         <div class="bg-gray-100 border-b rounded-t-xl pt-3 px-4 md:pt-4 md:px-5">
@@ -205,11 +207,13 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                         {{ id }}
                     </td>
                     <td class="">
+
                         {% set text_color = 'text-indigo-800' %}
                         {% set bg_color = 'bg-indigo-100' %}
                         {% set badge_element %}
                             <span class="size-2 mx-1 inline-block rounded-full bg-indigo-800"></span>
                         {% endset %}
+
                         {% if studies[id].state == 'Planned' %}
                             {% set text_color = 'text-slate-900' %}
                             {% set bg_color = 'bg-slate-200' %}
@@ -244,12 +248,13 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                                 </svg>
                             {% endset %}
                         {% endif %}
+
                         <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-sm font-medium {{ text_color }} {{ bg_color }}">
                             {{ badge_element | safe }}
                             {{ studies[id].state }}
                         </span>
                     </td>
-                    <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600 hover:external-link">
+                    <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600 hover:external-link relative after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:translate-x-full">
                         <a target="_blank" class="underline-offset-4 decoration-2" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>
                     </td>
                     <td class="tabular-nums dt-body-center">

@@ -4,6 +4,7 @@ table.dataTable thead > tr > th > span.dt-column-order::before, table.dataTable 
 }
 
 .apexcharts-tooltip {
+    /* QUICK FIX for background showing under custom tooltip */
     border-radius: 0.5rem !important;
     /* color: initial !important;
     background: initial !important; */

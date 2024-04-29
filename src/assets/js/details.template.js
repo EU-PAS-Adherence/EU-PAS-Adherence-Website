@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 fontFamily: 'inherit',
                 // redrawOnParentResize: false
             },
-            colors: ['#14b8a6', '#0284c7', '#6d28d9'],
+            colors: ['#64748b', '#6366f1', '#34d399'],
             labels: ['Planned', 'Ongoing', 'Finalised'],
             plotOptions: {
                 pie: {
@@ -178,6 +178,22 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 },
                 height: '100%'
             },
+            colors: ['#34d399', '#64748b'],
+            dataLabels: {
+                style: {
+                    fontSize: '.75rem',
+                    fontWeight: 'bold',
+                    // colors: undefined
+                },
+                dropShadow: {
+                    enabled: true,
+                    top: 1,
+                    left: 1,
+                    blur: 1,
+                    color: '#000',
+                    opacity: 0.45
+                }
+            },
             grid: {
                 show: false,
             },
@@ -191,7 +207,12 @@ document.addEventListener("DOMContentLoaded", function(_) {
                     barHeight: '75%',
                     dataLabels: {
                         total: {
-                            enabled: true
+                            enabled: true,
+                            offsetY: -4,
+                            style: {
+                                fontSize: '1rem',
+                                fontWeight: 600
+                            }
                         }
                     }
                 },
@@ -257,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
         aspectRatio: 3 / 4,
         geographyConfig: {
             hideAntarctica: true,
-            // borderWidth: 1.2,
+            borderWidth: .75,
             // borderOpacity: 1,
             // borderColor: '#212121',
             popupTemplate: function(geography, data) {
