@@ -25,7 +25,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
 <main class="flex flex-col gap-8 max-w-5xl p-4 mx-auto">
     <article class="mt-8 sm:mt-16 md:mt-24 max-w-3xl">
         <h1 class="text-5xl font-bold">{{ entry.name | transformFunding }}</h1>
-        <p>
+        <p class="mt-2">
             This sponsor has funded <span class="font-semibold">{{ entry.num_studies }} studies</span> across <span class="font-semibold">{{ entry.number_of_countries }} countries</span>.
         </p>
         
@@ -63,18 +63,18 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
     <div class="flex flex-col bg-white border shadow-sm rounded-xl">
         <div class="bg-gray-100 border-b rounded-t-xl pt-3 px-4 md:pt-4 md:px-5">
             <nav class="flex space-x-2" aria-label="Tabs">
-                
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                {# TODO: Convert to <a> to make it work without js  #}
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
                     RMP
                     <input class="sr-only" type="radio" name="tab" id="rmp" checked/>
                 </label>
 
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
                     State
                     <input class="sr-only" type="radio" name="tab" id="state"/>
                 </label>
 
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer" href="#">
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
                     Map
                     <input class="sr-only" type="radio" name="tab" id="map"/>
                 </label>
@@ -84,9 +84,9 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         <div class="p-4 md:py-7 md:px-5">
             
             <div id="rmpContainer">
-                <h3 class="text-lg font-bold text-gray-800">
+                <h2 class="text-lg font-bold text-gray-800">
                 Risk Management Plan (RMP)
-                </h3>
+                </h2>
                 <p class="mt-1 text-xs font-medium uppercase text-gray-500">
                     {{ entry.name | transformFunding }}
                 </p>
@@ -109,9 +109,9 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             </div>
 
             <div id="stateContainer" class="hidden">
-                <h3 class="text-lg font-bold text-gray-800">
+                <h2 class="text-lg font-bold text-gray-800">
                 Study State
-                </h3>
+                </h2>
                 <p class="mt-1 text-xs font-medium uppercase text-gray-500">
                     {{ entry.name | transformFunding }}
                 </p>
@@ -131,9 +131,9 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             </div>
 
             <div id="mapContainer" class="hidden">
-                <h3 class="text-lg font-bold text-gray-800">
+                <h2 class="text-lg font-bold text-gray-800">
                     Study countries
-                </h3>
+                </h2>
                 <p class="mt-1 text-xs font-medium uppercase text-gray-500">
                     {{ entry.name | transformFunding }}
                 </p>
@@ -173,9 +173,9 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
 
         <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5 my-8">
-            <h3 class="text-lg font-bold text-gray-800">
+            <h2 class="text-lg font-bold text-gray-800">
                 Study countries
-            </h3>
+            </h2>
             <p class="mt-1 text-xs font-medium uppercase text-gray-500">
                 {{ entry.name | transformFunding }}
             </p>
