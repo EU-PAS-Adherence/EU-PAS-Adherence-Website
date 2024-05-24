@@ -43,20 +43,20 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
             number_of_studies_with_rmp_nan: {{ entry.number_of_studies_with_risk_management_plan_nan }} <br>
             number_of_studies_with_result: {{ entry.number_of_studies_with_result }} <br>
             number_of_studies_with_protocol: {{ entry.number_of_studies_with_protocol }} <br>
-            number_of_studies_with_past_data_collection: {{ entry.number_of_studies_with_past_data_collection }} <br>
-            number_of_studies_with_past_data_collection_and_protocols: {{ entry.number_of_studies_with_past_data_collection_and_protocols }} <br>
-            number_of_studies_with_two_weeks_past_final_report: {{ entry.number_of_studies_with_two_weeks_past_final_report }} <br>
-            number_of_studies_with_two_weeks_past_final_report_and_results: {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} <br>
+            number_of_studies_with_due_protocol: {{ entry.number_of_studies_with_due_protocol }} <br>
+            number_of_studies_with_due_protocol_has_protocol: {{ entry.number_of_studies_with_due_protocol_has_protocol }} <br>
+            number_of_studies_with_due_result: {{ entry.number_of_studies_with_due_result }} <br>
+            number_of_studies_with_due_result_has_result: {{ entry.number_of_studies_with_due_result_has_result }} <br>
             study_ids: {{ entry.study_ids }} 
         </p> #}
     </article>
 
     <div class="w-full aspect-square max-w-lg mx-auto">
         <div id="docsBar"
-        data-past-collection="{{ entry.number_of_studies_with_past_data_collection }}"
-        data-past-collection-with-protocols="{{ entry.number_of_studies_with_past_data_collection_and_protocols }}"
-        data-past-report="{{ entry.number_of_studies_with_two_weeks_past_final_report }}"
-        data-past-report-with-results="{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }}"
+        data-past-collection="{{ entry.number_of_studies_with_due_protocol }}"
+        data-past-collection-with-protocols="{{ entry.number_of_studies_with_due_protocol_has_protocol }}"
+        data-past-report="{{ entry.number_of_studies_with_due_result }}"
+        data-past-report-with-results="{{ entry.number_of_studies_with_due_result_has_result }}"
         ></div>
     </div>
 

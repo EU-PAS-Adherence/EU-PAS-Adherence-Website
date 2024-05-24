@@ -4,6 +4,115 @@ function buildBadge(text) {
 
 document.addEventListener("DOMContentLoaded", function(_) {
 
+    // NOTE: IMPORTANT SECTIONS FIRST
+
+    const documentBarChart = (() => {
+        const barContainer = document.getElementById('docsBar');
+
+        const options = {
+            chart: {
+                type: 'bar',
+                stacked: true,
+                stackType: 'normal',
+                // stackType: '100%',
+                fontFamily: 'inherit',
+                toolbar: {
+                    show: false 
+                },
+                height: '100%'
+            },
+            colors: ['#34d399', '#64748b'],
+            dataLabels: {
+                style: {
+                    fontSize: '.75rem',
+                    fontWeight: 'bold',
+                    // colors: undefined
+                },
+                dropShadow: {
+                    enabled: true,
+                    top: 1,
+                    left: 1,
+                    blur: 1,
+                    color: '#000',
+                    opacity: 0.45
+                }
+            },
+            grid: {
+                show: false,
+            },
+            legend: {
+                show: false,
+            },
+            plotOptions: {
+                bar: {
+                    // horizontal: true,
+                    columnWidth: '50%',
+                    barHeight: '75%',
+                    dataLabels: {
+                        position: 'center',
+                        hideOverflowingLabels: false,
+                        // orientation: 'vertical',
+                        total: {
+                          enabled: false,
+                        //   formatter: undefined,
+                        //   offsetX: undefined,
+                        //   offsetY: 0,
+                        //   style: {
+                        //     // color: '#373d3f',
+                        //     fontSize: '1rem',
+                        //     fontWeight: 600
+                        //   }
+                        }
+                    }
+                },
+            },
+            series: [{
+                name: 'Reported',
+                data: [parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReportWithResults)]
+              }, {
+                name: 'Not reported',
+                data: [parseInt(barContainer.dataset.pastCollection) - parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReport) - parseInt(barContainer.dataset.pastReportWithResults)]
+            }],
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'lighten',
+                        value: 0.01,
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'darken',
+                        value: 0.75,
+                    }
+                },
+            },
+            xaxis: {
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false,
+                },          
+                categories: ['Protocols', 'Results']
+            },
+            yaxis: {
+                show: false,
+            }
+        }
+        
+        return new ApexCharts(barContainer, options);
+    })();
+
+    documentBarChart.render();
+
     const table = new DataTable('#data', {
         scrollX: true,
         pageLength: 50,
@@ -163,112 +272,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
         return new ApexCharts(chartContainer, options);
     })();
 
-    const documentBarChart = (() => {
-        const barContainer = document.getElementById('docsBar');
-
-        const options = {
-            chart: {
-                type: 'bar',
-                stacked: true,
-                stackType: 'normal',
-                // stackType: '100%',
-                fontFamily: 'inherit',
-                toolbar: {
-                    show: false 
-                },
-                height: '100%'
-            },
-            colors: ['#34d399', '#64748b'],
-            dataLabels: {
-                style: {
-                    fontSize: '.75rem',
-                    fontWeight: 'bold',
-                    // colors: undefined
-                },
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 1,
-                    color: '#000',
-                    opacity: 0.45
-                }
-            },
-            grid: {
-                show: false,
-            },
-            legend: {
-                show: false,
-            },
-            plotOptions: {
-                bar: {
-                    // horizontal: true,
-                    columnWidth: '50%',
-                    barHeight: '75%',
-                    dataLabels: {
-                        total: {
-                            enabled: true,
-                            offsetY: -4,
-                            style: {
-                                fontSize: '1rem',
-                                fontWeight: 600
-                            }
-                        }
-                    }
-                },
-            },
-            series: [{
-                name: 'Reported',
-                data: [parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReportWithResults)]
-              }, {
-                name: 'Not reported',
-                data: [parseInt(barContainer.dataset.pastCollection) - parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReport) - parseInt(barContainer.dataset.pastReportWithResults)]
-            }],
-            states: {
-                normal: {
-                    filter: {
-                        type: 'none',
-                        value: 0,
-                    }
-                },
-                hover: {
-                    filter: {
-                        type: 'lighten',
-                        value: 0.01,
-                    }
-                },
-                active: {
-                    allowMultipleDataPointsSelection: false,
-                    filter: {
-                        type: 'darken',
-                        value: 0.75,
-                    }
-                },
-            },
-            xaxis: {
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                },          
-                categories: ['Protocols', 'Results']
-            },
-            yaxis: {
-                show: false,
-            }
-        }
-        
-        return new ApexCharts(barContainer, options);
-    })();
-    
-
     rmpPieChart.render();
     statePieChart.render();
-    documentBarChart.render();
 
     const mapContainer = document.getElementById('mapChart');
-
     const map = new Datamap({
         element: mapContainer,
         height: 300,

@@ -46,12 +46,12 @@ js:
       {% set maxNumStudies = funding | map("num_studies") | max %}
       {%- for entry in funding -%}
 
-        {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-          {% set resultPercentage = (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(1) %}
+        {% if entry.number_of_studies_with_due_result > 0 %}
+          {% set resultPercentage = (100 * entry.number_of_studies_with_due_result_has_result / entry.number_of_studies_with_due_result) | round(1) %}
         {% endif %}
 
-        {% if entry.number_of_studies_with_past_data_collection > 0 %}
-          {% set protocolPercentage = (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(1) %}
+        {% if entry.number_of_studies_with_due_protocol > 0 %}
+          {% set protocolPercentage = (100 * entry.number_of_studies_with_due_protocol_has_protocol / entry.number_of_studies_with_due_protocol) | round(1) %}
         {% endif %}
 
         <tr>
@@ -61,10 +61,10 @@ js:
           <td class="tabular-nums">
             {{ entry.num_studies }}
           </td>
-          <td class="min-w-40" data-order="{{ protocolPercentage + entry.number_of_studies_with_past_data_collection / maxNumStudies }}" data-search="{{ protocolPercentage }} {{ entry.number_of_studies_with_past_data_collection_and_protocols }} {{ entry.number_of_studies_with_past_data_collection }}">
+          <td class="min-w-40" data-order="{{ protocolPercentage + entry.number_of_studies_with_due_protocol / maxNumStudies }}" data-search="{{ protocolPercentage }} {{ entry.number_of_studies_with_due_protocol_has_protocol }} {{ entry.number_of_studies_with_due_protocol }}">
             <div>
               <div class="mb-2 flex justify-between items-center">
-                <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}</h3>
+                <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_due_protocol_has_protocol }} / {{ entry.number_of_studies_with_due_protocol }}</h3>
                 <span class="text-sm text-gray-800 tabular-nums">{{ protocolPercentage }}%</span>
               </div>
               <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ protocolPercentage }}" aria-valuemin="0" aria-valuemax="100">
@@ -73,17 +73,17 @@ js:
             </div>
           </td>
           {# <td class="text-center">
-            {{ entry.number_of_studies_with_past_data_collection_and_protocols }} / {{ entry.number_of_studies_with_past_data_collection }}
+            {{ entry.number_of_studies_with_due_protocol_has_protocol }} / {{ entry.number_of_studies_with_due_protocol }}
           </td>
           <td class="text-end">
-            {% if entry.number_of_studies_with_past_data_collection > 0 %}
-              {{ (100 * entry.number_of_studies_with_past_data_collection_and_protocols / entry.number_of_studies_with_past_data_collection) | round(1) }}%
+            {% if entry.number_of_studies_with_due_protocol > 0 %}
+              {{ (100 * entry.number_of_studies_with_due_protocol_has_protocol / entry.number_of_studies_with_due_protocol) | round(1) }}%
             {% endif %}
           </td> #}
-          <td class="min-w-40" data-order="{{ resultPercentage + entry.number_of_studies_with_two_weeks_past_final_report / maxNumStudies }}" data-search="{{ resultPercentage }} {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} {{ entry.number_of_studies_with_two_weeks_past_final_report }}">
+          <td class="min-w-40" data-order="{{ resultPercentage + entry.number_of_studies_with_due_result / maxNumStudies }}" data-search="{{ resultPercentage }} {{ entry.number_of_studies_with_due_result_has_result }} {{ entry.number_of_studies_with_due_result }}">
             <div>
               <div class="mb-2 flex justify-between items-center">
-                <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}</h3>
+                <h3 class="text-sm font-semibold text-gray-800">{{ entry.number_of_studies_with_due_result_has_result }} / {{ entry.number_of_studies_with_due_result }}</h3>
                 <span class="text-sm text-gray-800 tabular-nums">{{ resultPercentage }}%</span>
               </div>
               <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{ resultPercentage }}" aria-valuemin="0" aria-valuemax="100">
@@ -92,11 +92,11 @@ js:
             </div>
           </td>
           {# <td class="text-center">
-            {{ entry.number_of_studies_with_two_weeks_past_final_report_and_results }} / {{ entry.number_of_studies_with_two_weeks_past_final_report }}
+            {{ entry.number_of_studies_with_due_result_has_result }} / {{ entry.number_of_studies_with_due_result }}
           </td>
           <td class="text-end">
-            {% if entry.number_of_studies_with_two_weeks_past_final_report > 0 %}
-              {{ (100 * entry.number_of_studies_with_two_weeks_past_final_report_and_results / entry.number_of_studies_with_two_weeks_past_final_report) | round(1) }}%
+            {% if entry.number_of_studies_with_due_result > 0 %}
+              {{ (100 * entry.number_of_studies_with_due_result_has_result / entry.number_of_studies_with_due_result) | round(1) }}%
             {% endif %}
           </td> #}
         </tr>
