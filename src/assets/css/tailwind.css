@@ -2,7 +2,7 @@
 
 @layer base {
     .external-link::after {
-        @apply size-4
+        @apply size-4;
         @apply ms-1;
         @apply inline-block;
         content: " ";
