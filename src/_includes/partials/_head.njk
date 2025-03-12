@@ -6,9 +6,9 @@
     <meta name="generator" content="{{meta.generator}}">
     <meta name="description" content="{% if description %}{{description}}{% else %}{{meta.description}}{% endif %}">
     <!-- Icon -->
-    <link rel="icon" href="/assets/icon/favicon.svg">
-    <link rel="mask-icon" href="/assets/icon/mask-icon.svg" color="#000000">
-    <link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
+    <link rel="icon" href="{{'/assets/icon/favicon.svg' | url}}">
+    <link rel="mask-icon" href="{{'/assets/icon/mask-icon.svg' | url}}" color="#000000">
+    <link rel="apple-touch-icon" href="{{'/assets/icon/apple-touch-icon.png' | url}}">
     <!-- CSS -->
     {% for style in css %}
         {% if style | isValidUrl %}
@@ -16,8 +16,6 @@
         {% else %}
             {% css ['/assets/css/', style] | join | url %}
         {% endif %}
-    {% else %}
-        {% css '/assets/css/tailwind.css' | url %}
     {% endfor %}
     <!-- JS -->
     {% for script in js %}
@@ -26,8 +24,6 @@
         {% else %}
             {% js ['/assets/js/', script] | join | url %}
         {% endif %}
-    {% else %}
-        {% js '/assets/js/header.js' | url %}
     {% endfor %}
     <!-- Title -->
     <title>

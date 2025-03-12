@@ -1,5 +1,10 @@
 {
     "author": "Pedram Ramezani",
     "description": "This website shows the funding sources of all PAS in the HMA-EMA Catalogue of real-world studies.",
-    "generator": "11ty"
+    "generator": "11ty",
+    "paper": {
+        "raw-title": "Compliance with legislation and recommendations to make public the protocol and results of post-authorisation studies registered with the European Medicines Agency: cross-sectional study",
+        "title": "Compliance with legislation and recommendations to make public the protocol and results of post&#8209;authorisation&nbsp;studies registered with the European&nbsp;Medicines&nbsp;Agency: cross-sectional study",
+        "url": "/"
+    }
 }

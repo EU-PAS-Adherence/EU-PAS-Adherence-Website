@@ -23,9 +23,9 @@ pagination:
 permalink: "details/{{ entry.name | transformFunding | slugify }}/"
 ---
 <main class="flex flex-col gap-8 max-w-5xl p-4 mx-auto">
-    <article class="mt-8 sm:mt-16 md:mt-24 max-w-3xl">
-        <h1 class="text-5xl font-bold">{{ entry.name | transformFunding }}</h1>
-        <p class="mt-2">
+    <article class="mt-8 sm:mt-16 md:mt-24 mb-24 max-w-3xl">
+        <h1 class="text-4xl font-bold leading-[3rem]">{{ entry.name | transformFunding }}</h1>
+        <p class="text-2xl">
             This sponsor has funded <span class="font-semibold">{{ entry.num_studies }} studies</span> across <span class="font-semibold">{{ entry.number_of_countries }} countries</span>.
         </p>
         
@@ -51,153 +51,19 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         </p> #}
     </article>
 
-    <div class="w-full aspect-square max-w-lg mx-auto">
-        <div id="docsBar"
-        data-past-collection="{{ entry.number_of_studies_with_due_protocol }}"
-        data-past-collection-with-protocols="{{ entry.number_of_studies_with_due_protocol_has_protocol }}"
-        data-past-report="{{ entry.number_of_studies_with_due_result }}"
-        data-past-report-with-results="{{ entry.number_of_studies_with_due_result_has_result }}"
-        ></div>
-    </div>
-
-    <div class="flex flex-col bg-white border shadow-sm rounded-xl">
-        <div class="bg-gray-100 border-b rounded-t-xl pt-3 px-4 md:pt-4 md:px-5">
-            <nav class="flex space-x-2" aria-label="Tabs">
-                {# TODO: Convert to <a> to make it work without js  #}
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
-                    RMP
-                    <input class="sr-only" type="radio" name="tab" id="rmp" checked/>
-                </label>
-
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
-                    State
-                    <input class="sr-only" type="radio" name="tab" id="state"/>
-                </label>
-
-                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
-                    Map
-                    <input class="sr-only" type="radio" name="tab" id="map"/>
-                </label>
-
-            </nav>
-        </div>
-        <div class="p-4 md:py-7 md:px-5">
-            
-            <div id="rmpContainer">
-                <h2 class="text-lg font-bold text-gray-800">
-                Risk Management Plan (RMP)
-                </h2>
-                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
-                    {{ entry.name | transformFunding }}
-                </p>
-                <p class="mt-2 text-gray-500">
-                    The RMP for a medical product outlines strategies to identify, assess, and mitigate risks, often leading to a Post-Authorization Study (PAS) for further safety evaluation.
-                </p>
-                <p class="mt-2 text-gray-500">
-                    <span class="italic">Category 1</span> studies are imposed as condition of marketing authorisation. <br>
-                    <span class="italic">Category 2</span> studies are imposed as specific obligation of marketing authorisation. <br>
-                    <span class="italic">Category 3</span> studies are required under other circumstances.
-                </p>
-                <div id="rmpPie" class="max-w-2xl mx-auto my-4 aspect-square grid place-content-center font-sans"
-                    data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
-                    data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
-                    data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
-                    data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
-                    data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
-                    data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
-                ></div>
-            </div>
-
-            <div id="stateContainer" class="hidden">
-                <h2 class="text-lg font-bold text-gray-800">
-                Study State
-                </h2>
-                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
-                    {{ entry.name | transformFunding }}
-                </p>
-                <p class="mt-2 text-gray-500">
-                    The state of a study is derived from the provided timeline dates. Read more about this <a class="underline decoration-2 text-indigo-600 decoration-indigo-600" href="/about">here</a>. <br>
-                </p>
-                <p class="mt-2 text-gray-500">
-                    <span class="italic">Planned</span> studies have not collected any data yet. <br>
-                    <span class="italic">Ongoing</span> studies collect data and should publish protocols as soon as possible. <br>
-                    <span class="italic">Finalised</span> studies should publish results in the first two weeks after finalisation.
-                </p>
-                <div id="statePie" class="max-w-2xl mx-auto my-4 aspect-square grid place-content-center"
-                    data-planned="{{ entry.number_of_studies_with_updated_state_planned }}"
-                    data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
-                    data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
-                ></div>
-            </div>
-
-            <div id="mapContainer" class="hidden">
-                <h2 class="text-lg font-bold text-gray-800">
-                    Study countries
-                </h2>
-                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
-                    {{ entry.name | transformFunding }}
-                </p>
-                <p class="mt-2 text-gray-500">
-                    Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
-                </p>
-                <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
-                    {% for country in entry.set_of_countries | split('; ') %}
-                        <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
-                    {% endfor %}
-                </ul>
-    
-                <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
-                                
-            </div>
-            
-        </div>
-    </div>
-
-    {# <div class="flex flex-col lg:flex-row gap-8 justify-stretch">
-        <div id="rmpPie" class="w-full"
-            data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
-            data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
-            data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
-            data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
-            data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
-            data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
-        ></div>
-        <div id="statePie" class="w-full"
-            data-planned="{{ entry.number_of_studies_with_updated_state_planned }}"
-            data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
-            data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
-        ></div>
-    </div> #}
-
-    {# <div>
-        <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
-
-        <div class="flex flex-col bg-white border shadow-sm rounded-xl p-5 my-8">
-            <h2 class="text-lg font-bold text-gray-800">
-                Study countries
-            </h2>
-            <p class="mt-1 text-xs font-medium uppercase text-gray-500">
-                {{ entry.name | transformFunding }}
-            </p>
-            <p class="mt-2 text-gray-500">
-                Studies were conducted in the following {{ entry.set_of_countries | split('; ') | length }} countries:
-            </p>
-            <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-start md:justify-between max-h-64 overflow-y-auto">
-                {% for country in entry.set_of_countries | split('; ') %}
-                    <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div> #}
-
-    <div class="my-8 -mx-4 md:mx-0">
+     <div class="-mx-4 md:mx-0">
         <table id="data" class="hover stripe row-border">
+            <caption class="text-xl text-left py-4 px-2">
+                PAS funded by this sponsor.
+            </caption>
             <thead class="text-lg">
                 <tr>
                     <th class="dt-head-left">EU&nbsp;PAS&nbsp;ID</th>
-                    <th class="dt-head-left">State</th>
+                    <th class="dt-head-left">Status</th>
                     <th class="dt-head-left">Title</th>
-                    <th class="dt-head-left">Registration Date</th>
+                    {# <th class="dt-head-left">Registration Date</th> #}
+                    <th class="dt-head-left">Protocol uploaded</th>
+                    <th class="dt-head-left">Results uploaded</th>
                 </tr>
             </thead>
             <tbody>
@@ -257,12 +123,120 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                     <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600 hover:external-link relative after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:translate-x-full">
                         <a target="_blank" class="underline-offset-4 decoration-2" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>
                     </td>
-                    <td class="tabular-nums dt-body-center">
+                    {# <td class="tabular-nums dt-body-center">
                         {{ studies[id].registration_date | date }}
+                    </td> #}
+                    <td class="tabular-nums dt-body-center">
+                        {{ studies[id].has_protocol | transformBool }}
+                    </td>
+                    <td class="tabular-nums dt-body-center">
+                        {{ studies[id].has_result | transformBool }}
                     </td>
                 </tr>
                 {%- endfor -%}
             </tbody>
         </table>
+    </div>
+
+    {# <div class="w-full aspect-square max-w-lg mx-auto">
+        <div id="docsBar"
+        data-past-collection="{{ entry.number_of_studies_with_due_protocol }}"
+        data-past-collection-with-protocols="{{ entry.number_of_studies_with_due_protocol_has_protocol }}"
+        data-past-report="{{ entry.number_of_studies_with_due_result }}"
+        data-past-report-with-results="{{ entry.number_of_studies_with_due_result_has_result }}"
+        ></div>
+    </div> #}
+
+    <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+        <div class="bg-gray-100 border-b rounded-t-xl pt-3 px-4 md:pt-4 md:px-5">
+            <nav class="flex space-x-2" aria-label="Tabs">
+                {# TODO: Convert to <a> to make it work without js  #}
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
+                    RMP
+                    <input class="sr-only" type="radio" name="tab" id="rmp" checked/>
+                </label>
+
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
+                    Status
+                    <input class="sr-only" type="radio" name="tab" id="state"/>
+                </label>
+
+                <label class="-mb-px py-3 px-4 has-[:checked]:bg-white text-sm font-medium text-center border-b has-[:checked]:border has-[:checked]:border-b-transparent text-gray-500 rounded-t-lg hover:text-gray-700 focus:z-10 cursor-pointer">
+                    Map
+                    <input class="sr-only" type="radio" name="tab" id="map"/>
+                </label>
+
+            </nav>
+        </div>
+        <div class="p-4 md:py-7 md:px-5">
+            
+            <div id="rmpContainer">
+                <h2 class="text-lg font-bold text-gray-800">
+                PAS by Risk Management Plan (RMP) requirement
+                </h2>
+                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                    {{ entry.name | transformFunding }}
+                </p>
+                <p class="mt-2 text-gray-500">
+                    The RMP for a medical product outlines strategies to identify, assess, and mitigate risks, including PAS for further evaluation.
+                </p>
+                <p class="mt-2 text-gray-500">
+                    <span class="italic">Category 1</span> studies are imposed as condition of marketing authorisation. <br>
+                    <span class="italic">Category 2</span> studies are imposed as specific obligation of marketing authorisation. <br>
+                    <span class="italic">Category 3</span> studies are required under other circumstances.
+                </p>
+                <div id="rmpPie" class="max-w-2xl mx-auto my-4 aspect-square grid place-content-center font-sans"
+                    data-rmp1="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }}"
+                    data-rmp2="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }}"
+                    data-rmp3="{{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }}"
+                    data-rmp-non-eu="{{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }}"
+                    data-rmp-na="{{ entry.number_of_studies_with_risk_management_plan_not_applicable }}"
+                    data-rmp-ns="{{ entry.number_of_studies_with_risk_management_plan_nan }}"
+                ></div>
+            </div>
+
+            <div id="stateContainer" class="hidden">
+                <h2 class="text-lg font-bold text-gray-800">
+                PAS by study status
+                </h2>
+                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                    {{ entry.name | transformFunding }}
+                </p>
+                <p class="mt-2 text-gray-500">
+                    The study status is defined according to the timeline dates specified.
+                </p>
+                <p class="mt-2 text-gray-500">
+                    <span class="italic">Planned</span> studies have not collected any data yet. <br>
+                    <span class="italic">Ongoing</span> studies collect data and should publish protocols as soon as possible. <br>
+                    <span class="italic">Finalised</span> studies should publish results in the first two weeks after finalisation.
+                </p>
+                <div id="statePie" class="max-w-2xl mx-auto my-4 aspect-square grid place-content-center"
+                    data-planned="{{ entry.number_of_studies_with_updated_state_planned }}"
+                    data-ongoing="{{ entry.number_of_studies_with_updated_state_ongoing }}"
+                    data-finalised="{{ entry.number_of_studies_with_updated_state_finalised }}"
+                ></div>
+            </div>
+
+            <div id="mapContainer" class="hidden">
+                <h2 class="text-lg font-bold text-gray-800">
+                    Countries
+                </h2>
+                <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                    {{ entry.name | transformFunding }}
+                </p>
+                <p class="mt-2 text-gray-500">
+                    {{ entry.set_of_countries | split('; ') | length }} Study countries specified are the following:
+                </p>
+                <ul class="mt-4 -mx-5 px-5 flex flex-wrap gap-4 justify-between max-h-64 overflow-y-auto">
+                    {% for country in entry.set_of_countries | split('; ') %}
+                        <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">{{ country }}</span></li>
+                    {% endfor %}
+                </ul>
+    
+                <div id="mapChart" class="relative w-full aspect-[4/3]" data-countries="{{ entry.set_of_countries | getCountryCodes }}"></div>
+                                
+            </div>
+            
+        </div>
     </div>
 </main>

@@ -6,112 +6,112 @@ document.addEventListener("DOMContentLoaded", function(_) {
 
     // NOTE: IMPORTANT SECTIONS FIRST
 
-    const documentBarChart = (() => {
-        const barContainer = document.getElementById('docsBar');
+    // const documentBarChart = (() => {
+    //     const barContainer = document.getElementById('docsBar');
 
-        const options = {
-            chart: {
-                type: 'bar',
-                stacked: true,
-                stackType: 'normal',
-                // stackType: '100%',
-                fontFamily: 'inherit',
-                toolbar: {
-                    show: false 
-                },
-                height: '100%'
-            },
-            colors: ['#34d399', '#64748b'],
-            dataLabels: {
-                style: {
-                    fontSize: '.75rem',
-                    fontWeight: 'bold',
-                    // colors: undefined
-                },
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 1,
-                    color: '#000',
-                    opacity: 0.45
-                }
-            },
-            grid: {
-                show: false,
-            },
-            legend: {
-                show: false,
-            },
-            plotOptions: {
-                bar: {
-                    // horizontal: true,
-                    columnWidth: '50%',
-                    barHeight: '75%',
-                    dataLabels: {
-                        position: 'center',
-                        hideOverflowingLabels: false,
-                        // orientation: 'vertical',
-                        total: {
-                          enabled: false,
-                        //   formatter: undefined,
-                        //   offsetX: undefined,
-                        //   offsetY: 0,
-                        //   style: {
-                        //     // color: '#373d3f',
-                        //     fontSize: '1rem',
-                        //     fontWeight: 600
-                        //   }
-                        }
-                    }
-                },
-            },
-            series: [{
-                name: 'Reported',
-                data: [parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReportWithResults)]
-              }, {
-                name: 'Not reported',
-                data: [parseInt(barContainer.dataset.pastCollection) - parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReport) - parseInt(barContainer.dataset.pastReportWithResults)]
-            }],
-            states: {
-                normal: {
-                    filter: {
-                        type: 'none',
-                        value: 0,
-                    }
-                },
-                hover: {
-                    filter: {
-                        type: 'lighten',
-                        value: 0.01,
-                    }
-                },
-                active: {
-                    allowMultipleDataPointsSelection: false,
-                    filter: {
-                        type: 'darken',
-                        value: 0.75,
-                    }
-                },
-            },
-            xaxis: {
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                },          
-                categories: ['Protocols', 'Results']
-            },
-            yaxis: {
-                show: false,
-            }
-        }
+    //     const options = {
+    //         chart: {
+    //             type: 'bar',
+    //             stacked: true,
+    //             stackType: 'normal',
+    //             // stackType: '100%',
+    //             fontFamily: 'inherit',
+    //             toolbar: {
+    //                 show: false 
+    //             },
+    //             height: '100%'
+    //         },
+    //         colors: ['#34d399', '#64748b'],
+    //         dataLabels: {
+    //             style: {
+    //                 fontSize: '.75rem',
+    //                 fontWeight: 'bold',
+    //                 // colors: undefined
+    //             },
+    //             dropShadow: {
+    //                 enabled: true,
+    //                 top: 1,
+    //                 left: 1,
+    //                 blur: 1,
+    //                 color: '#000',
+    //                 opacity: 0.45
+    //             }
+    //         },
+    //         grid: {
+    //             show: false,
+    //         },
+    //         legend: {
+    //             show: false,
+    //         },
+    //         plotOptions: {
+    //             bar: {
+    //                 // horizontal: true,
+    //                 columnWidth: '50%',
+    //                 barHeight: '75%',
+    //                 dataLabels: {
+    //                     position: 'center',
+    //                     hideOverflowingLabels: false,
+    //                     // orientation: 'vertical',
+    //                     total: {
+    //                       enabled: false,
+    //                     //   formatter: undefined,
+    //                     //   offsetX: undefined,
+    //                     //   offsetY: 0,
+    //                     //   style: {
+    //                     //     // color: '#373d3f',
+    //                     //     fontSize: '1rem',
+    //                     //     fontWeight: 600
+    //                     //   }
+    //                     }
+    //                 }
+    //             },
+    //         },
+    //         series: [{
+    //             name: 'Reported',
+    //             data: [parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReportWithResults)]
+    //           }, {
+    //             name: 'Not reported',
+    //             data: [parseInt(barContainer.dataset.pastCollection) - parseInt(barContainer.dataset.pastCollectionWithProtocols), parseInt(barContainer.dataset.pastReport) - parseInt(barContainer.dataset.pastReportWithResults)]
+    //         }],
+    //         states: {
+    //             normal: {
+    //                 filter: {
+    //                     type: 'none',
+    //                     value: 0,
+    //                 }
+    //             },
+    //             hover: {
+    //                 filter: {
+    //                     type: 'lighten',
+    //                     value: 0.01,
+    //                 }
+    //             },
+    //             active: {
+    //                 allowMultipleDataPointsSelection: false,
+    //                 filter: {
+    //                     type: 'darken',
+    //                     value: 0.75,
+    //                 }
+    //             },
+    //         },
+    //         xaxis: {
+    //             axisBorder: {
+    //                 show: false,
+    //             },
+    //             axisTicks: {
+    //                 show: false,
+    //             },          
+    //             categories: ['Protocols', 'Results']
+    //         },
+    //         yaxis: {
+    //             show: false,
+    //         }
+    //     }
         
-        return new ApexCharts(barContainer, options);
-    })();
+    //     return new ApexCharts(barContainer, options);
+    // })();
 
-    documentBarChart.render();
+    // documentBarChart.render();
 
     const table = new DataTable('#data', {
         scrollX: true,
@@ -119,10 +119,10 @@ document.addEventListener("DOMContentLoaded", function(_) {
         lengthMenu: [25, 50, 100, { label: 'All', value: -1 }],
         // stateSave: true,
         stateDuration: -1, // 0 for localStorage indefinetly or positive number for specific time, -1 for Session Storage
-        order: {
-            idx: 3,
-            dir: 'asc'
-        },
+        // order: {
+        //     idx: 3,
+        //     dir: 'asc'
+        // },
         fixedHeader: {
             header: true,
             headerOffset: 0
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 // redrawOnParentResize: false
             },
             colors: ['#dc2626', '#ea580c', '#facc15', '#22c55e', '#2563eb', '#7e22ce'],
-            labels: ['RMP Category 1', 'RMP Category 2', 'RMP Category 3', 'Non EU RMP', 'No RMP', 'Not specified'],
+            labels: ['RMP Category 1', 'RMP Category 2', 'RMP Category 3', 'Non-EU RMP', 'RMP not applicable', 'Unspecified'],
             plotOptions: {
                 pie: {
                     donut: {

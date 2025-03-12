@@ -8,6 +8,13 @@ const fs = require('fs');
 const CSV = require("csv-parse/sync");
 const { sep } = require("path");
 
+const specialSponsorMap = {
+  '$MarketingAuthorisationHolder': 'MAH not further specified',
+  '$Name': 'Name of primary lead investigator specified',
+  '$NoFunding': 'No funding',
+  '$NotFound/UnclearValue': 'Specified sponsor unclear'
+}
+
 module.exports = function(eleventyConfig){
     eleventyConfig.setServerOptions({
       liveReload: true,
@@ -72,18 +79,27 @@ module.exports = function(eleventyConfig){
       }
     });
 
-    eleventyConfig.addFilter("transformFunding", function(value) {  
+    eleventyConfig.addFilter("transformFunding", function(value) { 
       if (value === null) {
-        return "No Value Assigned"
-      } else if (value.startsWith('$')) {
-        return value.slice(1).replace(/([a-z])([A-Z])/g, '$1 $2')
-      } else {
-        return value
+        return 'Sponsor unspecified';
       }
+      else if (Object.keys(specialSponsorMap).includes(value)) {
+        return specialSponsorMap[value];
+      } else {
+        return value;
+      } 
     });
 
     eleventyConfig.addFilter("isSpecialFunding", function(value) {  
       return value === null || value.startsWith('$');
+    });
+
+    eleventyConfig.addFilter("transformBool", function(value) {  
+      if (value === null) {
+        return "N.A."
+      } else {
+        return value? "Yes" : "No"
+      }
     });
 
     eleventyConfig.addFilter("map", function(array, value) {  

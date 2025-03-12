@@ -15,10 +15,10 @@ js:
   - main.js
 ---
 <main class="max-w-5xl p-4 mx-auto">
-  <article class="flex flex-col my-24 gap-6 max-w-3xl mx-auto">
-    <h1 class="text-center text-4xl font-semibold uppercase leading-[3rem] inline-block mx-auto">Who sponsors <abbr title="Post authorisation studies">PAS</abbr> in the EU?</h1>
-    <p class="text-2xl">An analysis of all studies registered in the <a href="https://catalogues.ema.europa.eu/" class="underline">HMA&#8209;EMA&nbsp;Catalogue&nbsp;of&nbsp;RWD&nbsp;studies</a> up until February 21, 2024.</p>
-    <p class="italic leading-10">
+  <article class="flex flex-col mt-8 sm:mt-16 md:mt-24 mb-24 gap-6 max-w-3xl mx-auto">
+    <h1 class="text-center text-4xl font-bold leading-[3rem] inline-block mx-auto">Supplement to <a class="underline" href="{{ meta.paper.url }}">Ramezani&nbsp;et&nbsp;al.</a></h1>
+    <p class="text-2xl">A web supplement for "{{ meta.paper.title | safe }}".</p>
+    {# <p class="italic leading-10">
       Click header for ordering. <br> 
       <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
         Shift
@@ -28,17 +28,21 @@ js:
       </kbd> in search for exact matches. <br> 
       Use <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
         !
-      </kbd> in search to exclude matches.</p>
+      </kbd> in search to exclude matches.
+    </p> #}
   </article>
   <div class="-mx-4 md:mx-0">
     <table id="data" class="hover stripe row-border">
+      <caption class="text-xl text-left py-4 px-2">
+        PAS due that made public the protocol and results by sponsors.
+      </caption>
       <thead class="text-lg">
         <tr>
           <th class="dt-head-left">Name</th>
-          <th class="dt-head-right">#</th>
-          <th class="dt-head-left">Reported Protocols</th>
+          <th class="dt-head-left">Studies registered</th>
+          <th class="dt-head-left">Protocol uploaded</th>
           {# <th class="text-end">%</th> #}
-          <th class="dt-head-left">Reported Results</th>
+          <th class="dt-head-left">Results uploaded</th>
           {# <th class="text-end">%</th> #}
         </tr>
       </thead>
