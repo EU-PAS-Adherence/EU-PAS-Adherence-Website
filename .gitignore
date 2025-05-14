@@ -1,0 +1,15 @@
+# Generated files
+package/generated*
+
+# Ignore installed npm modules
+node_modules/
+package-lock.json
+
+# Ignore eleventy output when doing manual tests
+_site/
+
+# Excel converted to .csv
+countries_manual.xlsx
+
+# Mac ignore
+.DS_Store
