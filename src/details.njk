@@ -28,27 +28,6 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
         <p class="text-2xl">
             This sponsor has funded <span class="font-semibold">{{ entry.num_studies }} studies</span> across <span class="font-semibold">{{ entry.number_of_countries }} countries</span>.
         </p>
-        
-        {# <p class="mt-8">
-            number_of_countries: {{ entry.number_of_countries }} <br>
-            set_of_countries: {{ entry.set_of_countries }} <br>
-            number_of_studies_with_updated_state_finalised: {{ entry.number_of_studies_with_updated_state_finalised }} <br>
-            number_of_studies_with_updated_state_ongoing: {{ entry.number_of_studies_with_updated_state_ongoing }} <br>
-            number_of_studies_with_updated_state_planned: {{ entry.number_of_studies_with_updated_state_planned }} <br>
-            number_of_studies_with_rmp_1_(imposed_as_condition_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_1_(imposed_as_condition_of_marketing_authorisation)'] }} <br>
-            number_of_studies_with_rmp_2_(specific_obligation_of_marketing_authorisation): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_2_(specific_obligation_of_marketing_authorisation)'] }} <br>
-            number_of_studies_with_rmp_3_(required): {{ entry['number_of_studies_with_risk_management_plan_eu_rmp_category_3_(required)'] }} <br>
-            number_of_studies_with_rmp_non-eu_rmp_only: {{ entry['number_of_studies_with_risk_management_plan_non-eu_rmp_only'] }} <br>
-            number_of_studies_with_rmp_not_applicable: {{ entry.number_of_studies_with_risk_management_plan_not_applicable }} <br>
-            number_of_studies_with_rmp_nan: {{ entry.number_of_studies_with_risk_management_plan_nan }} <br>
-            number_of_studies_with_result: {{ entry.number_of_studies_with_result }} <br>
-            number_of_studies_with_protocol: {{ entry.number_of_studies_with_protocol }} <br>
-            number_of_studies_with_due_protocol: {{ entry.number_of_studies_with_due_protocol }} <br>
-            number_of_studies_with_due_protocol_has_protocol: {{ entry.number_of_studies_with_due_protocol_has_protocol }} <br>
-            number_of_studies_with_due_result: {{ entry.number_of_studies_with_due_result }} <br>
-            number_of_studies_with_due_result_has_result: {{ entry.number_of_studies_with_due_result_has_result }} <br>
-            study_ids: {{ entry.study_ids }} 
-        </p> #}
     </article>
 
      <div class="-mx-4 md:mx-0">

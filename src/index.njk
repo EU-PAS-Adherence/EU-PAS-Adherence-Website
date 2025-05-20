@@ -17,7 +17,7 @@ js:
 <main class="max-w-5xl p-4 mx-auto">
   <article class="flex flex-col mt-8 sm:mt-16 md:mt-24 mb-24 gap-6 max-w-3xl mx-auto">
     <h1 class="text-center text-4xl font-bold leading-[3rem] inline-block mx-auto">Supplement to <a class="underline" href="{{ meta.paper.url }}">Ramezani&nbsp;et&nbsp;al.</a></h1>
-    <p class="text-2xl">A web supplement for "{{ meta.paper.title | safe }}".</p>
+    <p class="text-2xl">A web supplement to "{{ meta.paper.title | safe }}".</p>
     {# <p class="italic leading-10">
       Click header for ordering. <br> 
       <kbd class="not-italic min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 font-mono text-sm text-gray-800 rounded-md">
@@ -34,16 +34,14 @@ js:
   <div class="-mx-4 md:mx-0">
     <table id="data" class="hover stripe row-border">
       <caption class="text-xl text-left py-4 px-2">
-        PAS due that made public the protocol and results by sponsors.
+        PAS examined for protocol and results availability.
       </caption>
       <thead class="text-lg">
         <tr>
           <th class="dt-head-left">Name</th>
           <th class="dt-head-left">Studies registered</th>
           <th class="dt-head-left">Protocol uploaded</th>
-          {# <th class="text-end">%</th> #}
           <th class="dt-head-left">Results uploaded</th>
-          {# <th class="text-end">%</th> #}
         </tr>
       </thead>
       <tbody>
@@ -76,14 +74,6 @@ js:
               </div>
             </div>
           </td>
-          {# <td class="text-center">
-            {{ entry.number_of_studies_with_due_protocol_has_protocol }} / {{ entry.number_of_studies_with_due_protocol }}
-          </td>
-          <td class="text-end">
-            {% if entry.number_of_studies_with_due_protocol > 0 %}
-              {{ (100 * entry.number_of_studies_with_due_protocol_has_protocol / entry.number_of_studies_with_due_protocol) | round(1) }}%
-            {% endif %}
-          </td> #}
           <td class="min-w-40" data-order="{{ resultPercentage + entry.number_of_studies_with_due_result / maxNumStudies }}" data-search="{{ resultPercentage }} {{ entry.number_of_studies_with_due_result_has_result }} {{ entry.number_of_studies_with_due_result }}">
             <div>
               <div class="mb-2 flex justify-between items-center">
@@ -95,14 +85,6 @@ js:
               </div>
             </div>
           </td>
-          {# <td class="text-center">
-            {{ entry.number_of_studies_with_due_result_has_result }} / {{ entry.number_of_studies_with_due_result }}
-          </td>
-          <td class="text-end">
-            {% if entry.number_of_studies_with_due_result > 0 %}
-              {{ (100 * entry.number_of_studies_with_due_result_has_result / entry.number_of_studies_with_due_result) | round(1) }}%
-            {% endif %}
-          </td> #}
         </tr>
       {%- endfor -%}
       </tbody>

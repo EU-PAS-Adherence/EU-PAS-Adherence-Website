@@ -1,7 +1,7 @@
 <header class="px-4">
     <nav class="flex items-center justify-between p-6 mx-auto mt-6 max-w-5xl rounded-full bg-white border border-slate-200 shadow-sm" aria-label="Global Navigation">
         <div class="flex lg:flex-1">
-            <a href="/" class="text-xl">PAS Sponsors</a>
+            <a href="/" class="text-xl">PAS Adherence</a>
         </div>
         <div class="flex lg:hidden">
             <button id="menu-open" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5">
@@ -13,7 +13,7 @@
         </div>
         <div class="hidden lg:flex lg:gap-4 divide-x-2 divide-slate-200 text-lg">
             <ul class="flex items-center gap-6">
-                {%- for mainpage in collections.main -%}
+                {%- for mainpage in collections.main | reverse -%}
                 <li>
                     <a class="underline-offset-4 decoration-2  {% if page.url == mainpage.url %} underline decoration-indigo-600 text-indigo-600 {% else %} hover:underline {% endif %} " href="{{ mainpage.url }}" {% if page.url == mainpage.url %} aria-current="page"{% endif %}>{{ mainpage.data.title }}</a>
                 </li>
@@ -33,7 +33,7 @@
         <div class="fixed inset-0 z-10"></div>
         <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="/" class="text-xl">PAS Sponsors</a>
+                <a href="/" class="text-xl">PAS Adherence</a>
                 <button id="menu-close" type="button" class="-m-2.5 rounded-md p-2.5">
                     <span class="sr-only">Close menu</span>
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
