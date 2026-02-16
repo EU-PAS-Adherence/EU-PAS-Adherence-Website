@@ -3,8 +3,8 @@
     "description": "This website is a web supplement to Ramezani et al. to show additional analyses on sponsor and study level.",
     "generator": "11ty",
     "paper": {
-        "raw-title": "Adherence with legislation and recommendations to make public the protocol and results of post-authorisation studies registered with the European Medicines Agency: cross-sectional study",
-        "title": "Adherence with legislation and recommendations to make public the protocol and results of post&#8209;authorisation&nbsp;studies registered with the European&nbsp;Medicines&nbsp;Agency: cross-sectional study",
+        "raw-title": "Adherence to legislation and recommendations to publicly post protocols and results of post-authorisation studies registered with the European Medicines Agency: cross-sectional study",
+        "title": "Adherence to legislation and recommendations to publicly post protocols and results of post&#8209;authorisation&nbsp;studies registered with the European&nbsp;Medicines&nbsp;Agency: cross-sectional study",
         "url": "/"
     },
     "github": "https://github.com/EU-PAS-Adherence/EU-PAS-Adherence-Website"
