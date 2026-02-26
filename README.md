@@ -1,5 +1,7 @@
 # EU PAS Adherence Website
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d366cf82-24e8-4a26-a5a2-53465f0b9d2e/deploy-status)](https://app.netlify.com/projects/ema-rwd/deploys) ![GitHub top language](https://img.shields.io/github/languages/top/EU-PAS-Adherence/EU-PAS-Adherence-Website?style=flat) ![GitHub License](https://img.shields.io/github/license/EU-PAS-Adherence/EU-PAS-Adherence-Website?style=flat)
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15799762.svg)](https://doi.org/10.5281/zenodo.15799762) [![Netlify Status](https://api.netlify.com/api/v1/badges/d366cf82-24e8-4a26-a5a2-53465f0b9d2e/deploy-status)](https://app.netlify.com/projects/ema-rwd/deploys) ![GitHub top language](https://img.shields.io/github/languages/top/EU-PAS-Adherence/EU-PAS-Adherence-Website?style=flat) ![GitHub License](https://img.shields.io/github/license/EU-PAS-Adherence/EU-PAS-Adherence-Website?style=flat)
 
 This repository contains the source code for the "EU PAS Adherence" website, which was created using [11ty](https://www.11ty.dev/) and is based on the metadata of the [HMA-EMA RWD Studies Catalogue](https://catalogues.ema.europa.eu/) (short: Catalogue).
 
