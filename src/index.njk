@@ -50,10 +50,14 @@ js:
 
         {% if entry.number_of_studies_with_due_result > 0 %}
           {% set resultPercentage = (100 * entry.number_of_studies_with_due_result_has_result / entry.number_of_studies_with_due_result) | round(1) %}
+        {% else %}
+          {% set resultPercentage = 0 %}
         {% endif %}
 
         {% if entry.number_of_studies_with_due_protocol > 0 %}
           {% set protocolPercentage = (100 * entry.number_of_studies_with_due_protocol_has_protocol / entry.number_of_studies_with_due_protocol) | round(1) %}
+        {% else %}
+          {% set protocolPercentage = 0 %}
         {% endif %}
 
         <tr>
