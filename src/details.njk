@@ -22,6 +22,29 @@ pagination:
   alias: entry
 permalink: "details/{{ entry.name | transformFunding | slugify }}/"
 ---
+{% set eu_flag %}
+    <svg class="flex-shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" viewBox="0 0 900 600">
+        <path fill="#039" d="M0 0h900v600H0z"/>
+        <g fill="#fc0" transform="translate(450 300)">
+            <path id="a" d="m0 162.5 22.042 67.838-57.707-41.926h71.33l-57.707 41.926z"/>
+            <use xlink:href="#a" y="-400"/>
+            <g id="b">
+            <use xlink:href="#a" transform="translate(-100 -26.795)"/>
+            <use xlink:href="#a" transform="translate(-173.205 -100)"/>
+            <use xlink:href="#a" transform="translate(-200 -200)"/>
+            <use xlink:href="#a" transform="translate(-173.205 -300)"/>
+            <use xlink:href="#a" transform="translate(-100 -373.205)"/>
+            </g>
+            <use xlink:href="#b" transform="scale(-1 1)"/>
+        </g>
+    </svg>
+{% endset %}
+{% set non_eu_flag %}
+    <span class="relative">
+        <svg class="flex-shrink-0 size-8 fill-red-500 absolute top-0 left-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free v6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        {{ eu_flag | safe }}
+    </span>
+{% endset %}
 <main class="flex flex-col gap-8 max-w-5xl p-4 mx-auto">
     <article class="mt-8 sm:mt-16 md:mt-24 mb-24 max-w-3xl">
         <h1 class="text-4xl font-bold leading-[3rem]">{{ entry.name | transformFunding }}</h1>
@@ -33,19 +56,25 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
      <div class="-mx-4 md:mx-0">
         <table id="data" class="hover stripe row-border">
             <caption class="text-xl text-left py-4 px-2">
-                PAS funded by this sponsor.
+                PAS funded by this sponsor. <br>
+                <span class="inline-flex items-center text-sm gap-x-1.5 py-0.5">
+                    {{ eu_flag | safe }} = EU RMP
+                </span>
+                <span class="inline-flex items-center text-sm gap-x-1.5 py-0.5 mx-4">
+                    {{ non_eu_flag | safe }} = Non-RMP only
+                </span>
             </caption>
             <thead class="text-lg">
                 <tr>
                     <th class="dt-head-left">EU&nbsp;PAS&nbsp;ID</th>
                     <th class="dt-head-left">Status</th>
+                    <th class="dt-head-left"><abbr title="Risk management plan">RMP</abbr></th>
                     <th class="dt-head-left">Title</th>
                     {# <th class="dt-head-left">Registration Date</th> #}
                     <th class="dt-head-left">Protocol uploaded</th>
                     <th class="dt-head-left">Results uploaded</th>
                 </tr>
             </thead>
-            <tbody>
                 {% for id in entry.study_ids | split('; ') %}
                 <tr>
                     <td class="tabular-nums">
@@ -98,6 +127,25 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                             {{ badge_element | safe }}
                             {{ studies[id].state }}
                         </span>
+                    </td>
+                    <td class="tabular-nums dt-body-left" data-search="{{studies[id].risk_management_plan | transformRMP}}" data-order="{{studies[id].risk_management_plan | RMPCategory}}">
+                        {% if studies[id].risk_management_plan == null %}
+                            {% set flag_element = null %}
+                            {% set label = 'Unspecified' %}
+                        {% elif studies[id].risk_management_plan | RMPCategory >= 1 and studies[id].risk_management_plan | RMPCategory <= 3%}
+                            {% set flag_element = eu_flag %}
+                            {% set label = studies[id].risk_management_plan | RMPCategory %}
+                        {% elif studies[id].risk_management_plan | RMPCategory == 4 %}
+                            {% set flag_element = non_eu_flag %}
+                        {% else %}
+                            {% set flag_element = null %}
+                            {% set label = 'NA' %}
+                        {% endif %}
+
+                        <abbr class="inline-flex items-center gap-x-1.5 py-0.5 px-3 text-sm font-medium" title="{{studies[id].risk_management_plan | transformRMP}}">
+                            {{ flag_element | safe }}
+                            {{ label }}
+                        </abbr>
                     </td>
                     <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600 hover:external-link relative after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:translate-x-full">
                         <a target="_blank" class="underline-offset-4 decoration-2" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>

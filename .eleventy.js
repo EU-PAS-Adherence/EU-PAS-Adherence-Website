@@ -15,6 +15,22 @@ const specialSponsorMap = {
   '$NotFound/UnclearValue': 'Specified sponsor unclear'
 }
 
+const rmpCategoryMap = {
+  'EU RMP category 1 (imposed as condition of marketing authorisation)': 1,
+  'EU RMP category 2 (specific obligation of marketing authorisation)': 2,
+  'EU RMP category 3 (required)': 3,
+  'Non-EU RMP only': 4,
+  'Not applicable': 5
+}
+
+const rmpNameMap = {
+  'EU RMP category 1 (imposed as condition of marketing authorisation)': 'EU RMP category 1',
+  'EU RMP category 2 (specific obligation of marketing authorisation)': 'EU RMP category 2',
+  'EU RMP category 3 (required)': 'EU RMP category 3',
+  'Non-EU RMP only': 'Non-EU RMP',
+  'Not applicable': 'RMP not applicable'
+}
+
 module.exports = function(eleventyConfig){
     eleventyConfig.setServerOptions({
       liveReload: true,
@@ -92,6 +108,28 @@ module.exports = function(eleventyConfig){
 
     eleventyConfig.addFilter("isSpecialFunding", function(value) {  
       return value === null || value.startsWith('$');
+    });
+
+    eleventyConfig.addFilter("transformRMP", function(value) { 
+      if (value === null) {
+        return 'Unspecified';
+      }
+      else if (Object.keys(rmpNameMap).includes(value)) {
+        return rmpNameMap[value];
+      } else {
+        return value;
+      } 
+    });
+
+     eleventyConfig.addFilter("RMPCategory", function(value) { 
+      if (value === null) {
+        return 6;
+      }
+      else if (Object.keys(rmpCategoryMap).includes(value)) {
+        return rmpCategoryMap[value];
+      } else {
+        return 0;
+      } 
     });
 
     eleventyConfig.addFilter("transformBool", function(value) {  

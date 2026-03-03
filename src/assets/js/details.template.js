@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 // redrawOnParentResize: false
             },
             colors: ['#dc2626', '#ea580c', '#facc15', '#22c55e', '#2563eb', '#7e22ce'],
-            labels: ['RMP Category 1', 'RMP Category 2', 'RMP Category 3', 'Non-EU RMP', 'RMP not applicable', 'Unspecified'],
+            labels: ['EU RMP Category 1', 'EU RMP Category 2', 'EU RMP Category 3', 'Non-EU RMP', 'RMP not applicable', 'Unspecified'],
             plotOptions: {
                 pie: {
                     donut: {
