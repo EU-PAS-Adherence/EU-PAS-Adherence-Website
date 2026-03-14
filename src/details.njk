@@ -137,6 +137,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                             {% set label = studies[id].risk_management_plan | RMPCategory %}
                         {% elif studies[id].risk_management_plan | RMPCategory == 4 %}
                             {% set flag_element = non_eu_flag %}
+                            {% set label = null %}
                         {% else %}
                             {% set flag_element = null %}
                             {% set label = 'NA' %}
