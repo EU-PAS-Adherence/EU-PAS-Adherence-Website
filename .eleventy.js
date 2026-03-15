@@ -27,8 +27,8 @@ const rmpNameMap = {
   'EU RMP category 1 (imposed as condition of marketing authorisation)': 'EU RMP category 1',
   'EU RMP category 2 (specific obligation of marketing authorisation)': 'EU RMP category 2',
   'EU RMP category 3 (required)': 'EU RMP category 3',
-  'Non-EU RMP only': 'Non-EU RMP',
-  'Not applicable': 'RMP not applicable'
+  'Non-EU RMP only': 'Non-EU RMP-only',
+  'Not applicable': 'Not included in RMP'
 }
 
 module.exports = function(eleventyConfig){
