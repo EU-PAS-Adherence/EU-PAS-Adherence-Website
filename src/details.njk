@@ -56,13 +56,14 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
      <div class="-mx-4 md:mx-0">
         <table id="data" class="hover stripe row-border">
             <caption class="text-xl text-left py-4 px-2">
-                PAS funded by this sponsor. <br>
+                PAS funded by this sponsor.
+                {# <br>
                 <span class="inline-flex items-center text-sm gap-x-1.5 py-0.5">
                     {{ eu_flag | safe }} = EU RMP
                 </span>
                 <span class="inline-flex items-center text-sm gap-x-1.5 py-0.5 mx-4">
                     {{ non_eu_flag | safe }} = Non-RMP only
-                </span>
+                </span> #}
             </caption>
             <thead class="text-lg">
                 <tr>
@@ -128,8 +129,9 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                             {{ studies[id].state }}
                         </span>
                     </td>
-                    <td class="tabular-nums dt-body-left" data-search="{{studies[id].risk_management_plan | transformRMP}}" data-order="{{studies[id].risk_management_plan | RMPCategory}}">
-                        {% if studies[id].risk_management_plan == null %}
+                    <td class="tabular-nums dt-body-left text-sm" data-search="{{studies[id].risk_management_plan | transformRMP}}" data-order="{{studies[id].risk_management_plan | RMPCategory}}">
+                        {{studies[id].risk_management_plan | transformRMP}}
+                        {# {% if studies[id].risk_management_plan == null %}
                             {% set flag_element = null %}
                             {% set label = 'Unspecified' %}
                         {% elif studies[id].risk_management_plan | RMPCategory >= 1 and studies[id].risk_management_plan | RMPCategory <= 3%}
@@ -146,7 +148,7 @@ permalink: "details/{{ entry.name | transformFunding | slugify }}/"
                         <abbr class="inline-flex items-center gap-x-1.5 py-0.5 px-3 text-sm font-medium" title="{{studies[id].risk_management_plan | transformRMP}}">
                             {{ flag_element | safe }}
                             {{ label }}
-                        </abbr>
+                        </abbr> #}
                     </td>
                     <td class="*:hover:underline *:hover:text-indigo-600 *:hover:decoration-indigo-600 hover:external-link relative after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:translate-x-full">
                         <a target="_blank" class="underline-offset-4 decoration-2" href="{{studies[id].url}}">{{ studies[id].title | truncate(150)}}</a>
